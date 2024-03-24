@@ -1,0 +1,8 @@
+
+@charset 'UTF-8';
+
+$color-mode-type: data;
+// Manually resolve the font dir path here as a workaround for https://github.com/vitejs/vite/issues/11012
+$bootstrap-icons-font-dir: "bootstrap-icons/font/fonts";
+@import "bootstrap-icons/font/bootstrap-icons";
+@import "bootstrap/scss/bootstrap";
