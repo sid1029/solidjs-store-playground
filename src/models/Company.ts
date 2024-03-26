@@ -12,8 +12,8 @@ export class PersonDetail implements IDetail {
 	name: string = '';
 	// display label
 	label: string = '';
-	// salary
-	deals: number = 0;
+	// revenue generated
+	revenue: number = 0;
 	// input or output
 	input: boolean = false;
 }
@@ -57,12 +57,16 @@ export interface EquipmentUI {
 export const createFakeDetails = (isInput: boolean): PersonDetail => ({
 	name: faker.string.alphanumeric({ length: 10 }),
 	label: faker.lorem.word(),
-	deals: faker.number.int({min: 100, max: 500}),
+	revenue: faker.number.int({min: 100, max: 500}),
 	input: isInput,
 });
 
 export const createFakePerson = (): PersonUI => {
 	// Store has to be explicitly created when object is created using 'new'.
+	// We can ignore the setter returned by createStore since the parent
+	// setter will still be able to reach into this object via path params
+	// in order to make edits.
+	// See PersonRow._onEdit(), CompanyDirectoryContextModel.addDetailTo() etc...
 	const [personStore] = createStore(new Person({
 		id: faker.string.uuid(),
 		lastName: faker.person.firstName(),

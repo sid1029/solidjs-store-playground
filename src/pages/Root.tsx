@@ -2,32 +2,27 @@ import { Alert, Button, ButtonGroup, Col, Container, ListGroup, Row } from 'soli
 
 import { Key } from '@solid-primitives/keyed';
 
-import EquipmentRow from '../components/EquipmentRow';
-import PersonRow from '../components/PersonRow';
-import { useCompanyContext } from '../models/CompanyDirContext';
-import { createMemo } from 'solid-js';
-import { PersonDetail } from '@/models/Company';
+import EquipmentRow from '@/components/EquipmentRow';
+import PersonRow from '@/components/PersonRow';
+import { useCompanyContext } from '@/models/CompanyDirContext';
 
 export default function Root() {
-	const { people, equipment, addFakePerson, addFakeEquipment } = useCompanyContext();
-
-	const totalSpend = createMemo(() => equipment.reduce((acc, e) => acc + e.spend, 0));
-	const totalDeals = createMemo(
-		() => people.reduce((acc, p) => {
-			const sumDeals = (dealTotal: number, detail: PersonDetail) => dealTotal + detail.deals;
-			return acc + p.person.inputs.reduce(sumDeals, 0) + p.person.outputs.reduce(sumDeals, 0);
-		}, 0));
+	const {
+		people, equipment,
+		addFakePerson, addFakeEquipment,
+		totalRevenue, totalSpend,
+	} = useCompanyContext();
 
 	return (
 		<Container>
 			<Row class="my-3">
 				<Col class="d-flex flex-row gap-5">
 					<span>People count : {people.length}</span>
-					<span>Total deals : {totalDeals()}</span>
+					<span>Total revenue : ${totalRevenue()}</span>
 				</Col>
 				<Col class="d-flex flex-row gap-5">
 					<span>Equip count : {equipment.length}</span>
-					<span>Equip total spend : {totalSpend()}</span>
+					<span>Equip total spend : ${totalSpend()}</span>
 				</Col>
 			</Row>
 			<Row class="my-3">

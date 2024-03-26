@@ -2,8 +2,8 @@ import { createMemo } from 'solid-js';
 
 import { Alert, Button, ButtonGroup, Col, Form, FormGroup, ListGroup, Row, Stack } from 'solid-bootstrap';
 
-import { PersonDetails, Person } from '../models/Company';
-import { useCompanyContext } from '../models/CompanyDirContext';
+import { PersonDetails, Person } from '@/models/Company';
+import { useCompanyContext } from '@/models/CompanyDirContext';
 import { Key } from '@solid-primitives/keyed';
 
 interface PersonRowProps {
@@ -92,7 +92,9 @@ function ConnectorGroup(props: ConnectorGroupProps) {
 					<ListGroup.Item itemId={conn().name}
 						class="d-flex flex-row gap-3 align-items-baseline"
 					>
-						<h6 class="text-truncate me-auto">{conn().name} - {conn().label}</h6>
+						<h6 class="text-truncate me-auto">
+							<b>[{conn().revenue}]</b>-{conn().name} - {conn().label}
+						</h6>
 						<Button
 							variant='danger'
 							onClick={() => removeConnectorFrom(props.personIdx, props.isInput, idx())}>
