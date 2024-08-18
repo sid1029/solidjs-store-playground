@@ -2,29 +2,29 @@ import { faker } from '@faker-js/faker';
 import { createStore } from 'solid-js/store';
 
 export interface IDetail {
-    name: string;
-    label: string;
-    input: boolean;
+	name: string;
+	label: string;
+	input: boolean;
 }
 
 export class PersonDetail implements IDetail {
 	// name of this detail
-	name: string = '';
+	name = '';
 	// display label
-	label: string = '';
+	label = '';
 	// revenue generated
-	revenue: number = 0;
+	revenue = 0;
 	// input or output
-	input: boolean = false;
+	input = false;
 }
 
 export type PersonDetails = Array<PersonDetail>;
 
 export class Person {
-	public id: string = '';
-	public lastName: string = '';
-	public firstName: string = '';
-	public title: string = '';
+	public id = '';
+	public lastName = '';
+	public firstName = '';
+	public title = '';
 
 	// list of input Details
 	public inputs: PersonDetails = [];
@@ -38,26 +38,26 @@ export class Person {
 }
 
 export interface PersonUI {
-    person: Person;
-    // location 
-    x: number;
-    y: number;
+	person: Person;
+	// location
+	x: number;
+	y: number;
 }
 
 export interface EquipmentUI {
-    id: string;
-    name: string;
-    manufacturer: string;
-    contract: string;
-    spend: number;
-    x: number;
-    y: number;
+	id: string;
+	name: string;
+	manufacturer: string;
+	contract: string;
+	spend: number;
+	x: number;
+	y: number;
 }
 
 export const createFakeDetails = (isInput: boolean): PersonDetail => ({
 	name: faker.string.alphanumeric({ length: 10 }),
 	label: faker.lorem.word(),
-	revenue: faker.number.int({min: 100, max: 500}),
+	revenue: faker.number.int({ min: 100, max: 500 }),
 	input: isInput,
 });
 
@@ -67,14 +67,16 @@ export const createFakePerson = (): PersonUI => {
 	// setter will still be able to reach into this object via path params
 	// in order to make edits.
 	// See PersonRow._onEdit(), CompanyDirectoryContextModel.addDetailTo() etc...
-	const [personStore] = createStore(new Person({
-		id: faker.string.uuid(),
-		lastName: faker.person.firstName(),
-		firstName: faker.person.lastName(),
-		title: faker.person.jobTitle(),
-		inputs: [],
-		outputs: [],
-	}));
+	const [personStore] = createStore(
+		new Person({
+			id: faker.string.uuid(),
+			lastName: faker.person.firstName(),
+			firstName: faker.person.lastName(),
+			title: faker.person.jobTitle(),
+			inputs: [],
+			outputs: [],
+		}),
+	);
 	return {
 		person: personStore,
 		x: faker.number.int({ min: 10, max: 100 }),

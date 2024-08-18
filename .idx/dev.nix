@@ -11,7 +11,7 @@
   env = { };
   # search for the extension on https://open-vsx.org/ and use "publisher.id"
   idx.extensions = [
-    # "vscodevim.vim"
+    "biomejs.biome"
   ];
   # runs when a workspace is first created with this `dev.nix` file
   # to run something each time the environment is rebuilt, use the `onStart` hook
@@ -28,8 +28,8 @@
         id = "web";
       }
       {
-        manager = "ios";
-        id = "ios";
+        manager = "flutter";
+        id = "flutter";
       }
     ];
   };

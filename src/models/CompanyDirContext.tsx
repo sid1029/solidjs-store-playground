@@ -1,7 +1,14 @@
-import { createContext, useContext, JSX, createMemo } from 'solid-js';
-import { createStore, produce, SetStoreFunction } from 'solid-js/store';
+import { createContext, useContext, type JSX, createMemo } from 'solid-js';
+import { createStore, produce, type SetStoreFunction } from 'solid-js/store';
 
-import { createFakeDetails, createFakeEquipment, createFakePerson, EquipmentUI, PersonDetail, PersonUI } from './Company';
+import {
+	createFakeDetails,
+	createFakeEquipment,
+	createFakePerson,
+	type EquipmentUI,
+	type PersonDetail,
+	type PersonUI,
+} from './Company';
 
 const INIT_COUNT = Math.floor(Math.random() * 20);
 
@@ -15,13 +22,13 @@ export class CompanyDirectoryContextModel {
 	constructor() {
 		// eslint-disable-next-line solid/reactivity
 		[this.people, this.setPeople] = createStore<Array<PersonUI>>(
-			[...Array(INIT_COUNT)].map(createFakePerson)
+			[...Array(INIT_COUNT)].map(createFakePerson),
 		);
 		// eslint-disable-next-line solid/reactivity
 		[this.equipment, this.setEquipment] = createStore<Array<EquipmentUI>>(
-			[...Array(INIT_COUNT)].map(createFakeEquipment)
+			[...Array(INIT_COUNT)].map(createFakeEquipment),
 		);
-			}
+	}
 
 	public addFakePerson: VoidFunction = () => {
 		this.setPeople(this.people.length, createFakePerson);
@@ -41,33 +48,49 @@ export class CompanyDirectoryContextModel {
 
 	public addDetailTo = (personIdx: number, isInput: boolean) => {
 		const p = this.people[personIdx].person;
-		let details = isInput ? p.inputs : p.outputs;
+		const details = isInput ? p.inputs : p.outputs;
 		this.setPeople(
-			personIdx, 'person', isInput ? 'inputs' : 'outputs',
-			details.length, createFakeDetails(isInput)
+			personIdx,
+			'person',
+			isInput ? 'inputs' : 'outputs',
+			details.length,
+			createFakeDetails(isInput),
 		);
 	};
 
-	public removeDetailFrom = (personIdx: number, isInput: boolean, connIdx: number) => {
+	public removeDetailFrom = (
+		personIdx: number,
+		isInput: boolean,
+		connIdx: number,
+	) => {
 		this.setPeople(
-			personIdx, 'person', isInput ? 'inputs' : 'outputs',
-			produce((details) => details.splice(connIdx, 1))
+			personIdx,
+			'person',
+			isInput ? 'inputs' : 'outputs',
+			produce((details) => details.splice(connIdx, 1)),
 		);
 	};
 
 	public get totalSpend() {
-		return createMemo(() => this.equipment.reduce((acc, e) => acc + e.spend, 0));
+		const total = createMemo(() =>
+			this.equipment.reduce((acc, e) => acc + e.spend, 0),
+		);
+		return total;
 	}
 
 	public get totalRevenue() {
-		return createMemo(
-			() => this.people.reduce((acc, p) => {
-				const sumDeals =
-					(dealTotal: number, detail: PersonDetail) => dealTotal + detail.revenue;
-				return acc
-					+ p.person.inputs.reduce(sumDeals, 0)
-					+ p.person.outputs.reduce(sumDeals, 0);
-			}, 0));
+		const revTotal = createMemo(() =>
+			this.people.reduce((acc, p) => {
+				const sumDeals = (dealTotal: number, detail: PersonDetail) =>
+					dealTotal + detail.revenue;
+				return (
+					acc +
+					p.person.inputs.reduce(sumDeals, 0) +
+					p.person.outputs.reduce(sumDeals, 0)
+				);
+			}, 0),
+		);
+		return revTotal;
 	}
 }
 
@@ -75,7 +98,8 @@ interface CompanyContextProps {
 	children: JSX.Element;
 }
 
-export const CompanyContext = createContext<CompanyDirectoryContextModel>(undefined);
+export const CompanyContext =
+	createContext<CompanyDirectoryContextModel>(undefined);
 
 export function CompanyContextProvider(props: CompanyContextProps) {
 	return (
@@ -85,4 +109,6 @@ export function CompanyContextProvider(props: CompanyContextProps) {
 	);
 }
 
-export function useCompanyContext() { return useContext(CompanyContext)!; }
+export function useCompanyContext() {
+	return useContext(CompanyContext)!;
+}
