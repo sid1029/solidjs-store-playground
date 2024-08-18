@@ -1,3 +1,6 @@
+### This is an experiment to observe how reactivity can be achieved with an array of deeply nested objects using Solid's immutable createStore().
+### I have commented on some of the caveats I ran into.
+
 ## Usage
 
 ```bash
