@@ -20,11 +20,9 @@ export class CompanyDirectoryContextModel {
 	public setEquipment: SetStoreFunction<Array<EquipmentUI>>;
 
 	constructor() {
-		// eslint-disable-next-line solid/reactivity
 		[this.people, this.setPeople] = createStore<Array<PersonUI>>(
 			[...Array(INIT_COUNT)].map(createFakePerson),
 		);
-		// eslint-disable-next-line solid/reactivity
 		[this.equipment, this.setEquipment] = createStore<Array<EquipmentUI>>(
 			[...Array(INIT_COUNT)].map(createFakeEquipment),
 		);
@@ -72,14 +70,14 @@ export class CompanyDirectoryContextModel {
 	};
 
 	public get totalSpend() {
-		const total = createMemo(() =>
+		const calculateTotalFn = createMemo(() =>
 			this.equipment.reduce((acc, e) => acc + e.spend, 0),
 		);
-		return total;
+		return calculateTotalFn;
 	}
 
 	public get totalRevenue() {
-		const revTotal = createMemo(() =>
+		const calculateRevFn = createMemo(() =>
 			this.people.reduce((acc, p) => {
 				const sumDeals = (dealTotal: number, detail: PersonDetail) =>
 					dealTotal + detail.revenue;
@@ -90,7 +88,7 @@ export class CompanyDirectoryContextModel {
 				);
 			}, 0),
 		);
-		return revTotal;
+		return calculateRevFn;
 	}
 }
 

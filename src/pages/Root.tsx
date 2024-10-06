@@ -40,10 +40,10 @@ export default function Root() {
 				<ButtonGroup>
 					<Button variant='outline-primary' onClick={addFakePerson}>
 						Add Person&nbsp;&nbsp;
-						<i class='bi-plus-lg' />
+						<i class='bi-plus-circle-fill' />
 					</Button>
 					<Button variant='outline-primary' onClick={addFakeEquipment}>
-						<i class='bi-plus-lg' />
+						<i class='bi-plus-circle-fill' />
 						&nbsp;&nbsp;Add Equipment
 					</Button>
 				</ButtonGroup>
@@ -69,7 +69,12 @@ export default function Root() {
 					<Key
 						each={equipment}
 						by='id'
-						fallback={<Alert variant='warning'>Add Equipment !</Alert>}
+						fallback={
+							<Alert variant='warning' class='text-center'>
+								<i class='bi-exclamation-triangle-fill pe-2' />
+								Add Equipment !
+							</Alert>
+						}
 					>
 						{(uiEquip, idx) => (
 							<ListGroup.Item

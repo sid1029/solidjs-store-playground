@@ -8,7 +8,6 @@ import {
 	Form,
 	FormGroup,
 	ListGroup,
-	Row,
 	Stack,
 } from 'solid-bootstrap';
 
@@ -72,7 +71,7 @@ export default function PersonRow(props: PersonRowProps) {
 					variant='primary'
 					onClick={() => addDetailTo(props.personIdx, true)}
 				>
-					+ Input Detail
+					Input Detail +
 				</Button>
 				<Button
 					variant='primary'
@@ -81,7 +80,7 @@ export default function PersonRow(props: PersonRowProps) {
 					+ Output Detail
 				</Button>
 			</ButtonGroup>
-			<Row xs={2}>
+			<Stack direction='horizontal' class='align-items-baseline' gap={2}>
 				<ConnectorGroup
 					personIdx={props.personIdx}
 					isInput={true}
@@ -92,7 +91,7 @@ export default function PersonRow(props: PersonRowProps) {
 					isInput={false}
 					details={currPerson().outputs}
 				/>
-			</Row>
+			</Stack>
 		</Col>
 	);
 }
@@ -101,18 +100,20 @@ interface ConnectorGroupProps {
 	personIdx: number;
 	isInput: boolean;
 	details: PersonDetails;
+	class?: string;
 }
 
 function ConnectorGroup(props: ConnectorGroupProps) {
 	const { removeDetailFrom: removeConnectorFrom } = useCompanyContext();
 
 	return (
-		<ListGroup>
+		<ListGroup style={{ width: '48%', flex: 1 }} class={props.class}>
 			<Key
 				each={props.details}
 				by='name'
 				fallback={
-					<Alert variant='primary'>
+					<Alert variant='primary' class='text-center'>
+						<i class='bi-exclamation-triangle-fill pe-2' />
 						Add {props.isInput ? 'Inputs' : 'Outputs'}
 					</Alert>
 				}
