@@ -27,10 +27,6 @@
         manager = "web";
         id = "web";
       }
-      {
-        manager = "flutter";
-        id = "flutter";
-      }
     ];
   };
 }

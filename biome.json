@@ -17,8 +17,8 @@
 			"style": {
 				"noNonNullAssertion": "info"
 			},
-			"nursery": {
-				"noReactSpecificProps": "warn"
+			"suspicious": {
+				"noReactSpecificProps": "error"
 			}
 		}
 	}

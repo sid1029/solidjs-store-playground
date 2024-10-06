@@ -31,9 +31,7 @@ export default function EquipmentRow(props: EquipmentRowProps) {
 
 	return (
 		<Col class='d-flex pt-2 flex-column gap-3'>
-			<span class='text-nowrap text-truncate'>
-				{currEquip().contract}
-			</span>
+			<span class='text-nowrap text-truncate'>{currEquip().contract}</span>
 			<Stack direction='horizontal' class='align-items-baseline' gap={2}>
 				<FormGroup as={Col} controlId='name'>
 					<Form.Control

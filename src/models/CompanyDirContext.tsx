@@ -94,19 +94,22 @@ export class CompanyDirectoryContextModel {
 
 interface CompanyContextProps {
 	children: JSX.Element;
+	model: CompanyDirectoryContextModel;
 }
 
-export const CompanyContext =
-	createContext<CompanyDirectoryContextModel>(undefined);
+export const CompanyContext = createContext<CompanyDirectoryContextModel>(
+	{} as CompanyDirectoryContextModel,
+);
 
 export function CompanyContextProvider(props: CompanyContextProps) {
+	console.log('Creatign company context.');
 	return (
-		<CompanyContext.Provider value={new CompanyDirectoryContextModel()}>
+		<CompanyContext.Provider value={props.model}>
 			{props.children}
 		</CompanyContext.Provider>
 	);
 }
 
 export function useCompanyContext() {
-	return useContext(CompanyContext)!;
+	return useContext(CompanyContext);
 }

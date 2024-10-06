@@ -1,10 +1,13 @@
 import './App.scss';
-import { CompanyContextProvider } from './models/CompanyDirContext';
+import {
+	CompanyContextProvider,
+	CompanyDirectoryContextModel,
+} from './models/CompanyDirContext';
 import Root from './pages/Root';
 
 function App() {
 	return (
-		<CompanyContextProvider>
+		<CompanyContextProvider model={new CompanyDirectoryContextModel()}>
 			<Root />
 		</CompanyContextProvider>
 	);
