@@ -30,46 +30,51 @@ export default function EquipmentRow(props: EquipmentRowProps) {
 	const currEquip = createMemo(() => equipment[props.equipIdx]);
 
 	return (
-		<Stack direction='horizontal' class='align-items-baseline' gap={2}>
-			<FormGroup as={Col} controlId='name'>
-				<Form.Control
-					value={currEquip().name}
-					onInput={(evt) => _editProp(evt, 'name')}
-					type='text'
-					placeholder='Name'
-				/>
-			</FormGroup>
-			<FormGroup as={Col} controlId='contract'>
-				<Form.Control
-					value={currEquip().contract}
-					onInput={(evt) => _editProp(evt, 'contract')}
-					type='text'
-					placeholder='Contract'
-				/>
-			</FormGroup>
-			<FormGroup as={Col} controlId='manufacturer'>
-				<Form.Control
-					value={currEquip().manufacturer}
-					onInput={(evt) => _editProp(evt, 'manufacturer')}
-					type='text'
-					placeholder='Manufacturer'
-				/>
-			</FormGroup>
-			<FormGroup as={Col} controlId='spend'>
-				<Form.Control
-					value={currEquip().spend}
-					onInput={(evt) => _editProp(evt, 'spend')}
-					type='number'
-					placeholder='Spend'
-				/>
-			</FormGroup>
-			<div class='vr' />
-			<Button
-				variant='danger'
-				onClick={() => deleteEquipmentAt(props.equipIdx)}
-			>
-				<i class='bi-trash' />
-			</Button>
-		</Stack>
+		<Col class='d-flex pt-2 flex-column gap-3'>
+			<span class='text-nowrap text-truncate'>
+				{currEquip().contract}
+			</span>
+			<Stack direction='horizontal' class='align-items-baseline' gap={2}>
+				<FormGroup as={Col} controlId='name'>
+					<Form.Control
+						value={currEquip().name}
+						onInput={(evt) => _editProp(evt, 'name')}
+						type='text'
+						placeholder='Name'
+					/>
+				</FormGroup>
+				<FormGroup as={Col} controlId='contract'>
+					<Form.Control
+						value={currEquip().contract}
+						onInput={(evt) => _editProp(evt, 'contract')}
+						type='text'
+						placeholder='Contract'
+					/>
+				</FormGroup>
+				<FormGroup as={Col} controlId='manufacturer'>
+					<Form.Control
+						value={currEquip().manufacturer}
+						onInput={(evt) => _editProp(evt, 'manufacturer')}
+						type='text'
+						placeholder='Manufacturer'
+					/>
+				</FormGroup>
+				<FormGroup as={Col} controlId='spend'>
+					<Form.Control
+						value={currEquip().spend}
+						onInput={(evt) => _editProp(evt, 'spend')}
+						type='number'
+						placeholder='Spend'
+					/>
+				</FormGroup>
+				<div class='vr' />
+				<Button
+					variant='danger'
+					onClick={() => deleteEquipmentAt(props.equipIdx)}
+				>
+					<i class='bi-trash' />
+				</Button>
+			</Stack>
+		</Col>
 	);
 }

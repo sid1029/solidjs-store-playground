@@ -53,7 +53,12 @@ export default function Root() {
 					<Key
 						each={people}
 						by={(uiPerson) => uiPerson.person.id}
-						fallback={<Alert variant='warning'>Add People !</Alert>}
+						fallback={
+							<Alert variant='warning' class='text-center'>
+								<i class='bi-exclamation-triangle-fill pe-2' />
+								Add People !
+							</Alert>
+						}
 					>
 						{(uiPerson, idx) => (
 							<ListGroup.Item itemId={uiPerson().person.id}>
@@ -77,14 +82,8 @@ export default function Root() {
 						}
 					>
 						{(uiEquip, idx) => (
-							<ListGroup.Item
-								itemId={uiEquip().id}
-								class='d-flex flex-column gap-1'
-							>
+							<ListGroup.Item itemId={uiEquip().id}>
 								{uiEquip().manufacturer} - {uiEquip().name}
-								<span class='text-truncate'>
-									{uiEquip().spend} - {uiEquip().contract}
-								</span>
 								<EquipmentRow equipIdx={idx()} />
 							</ListGroup.Item>
 						)}
