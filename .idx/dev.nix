@@ -21,12 +21,11 @@
   # preview configuration
   idx.previews = {
     enable = true;
-    previews = [
-      {
-        command = ["npm" "run" "dev" "--" "--port" "$PORT" "--host" "0.0.0.0"];
+    previews = {
+      web = {
+        command = [ "npm" "run" "dev" "--" "--port" "$PORT" "--host" "0.0.0.0" ];
         manager = "web";
-        id = "web";
-      }
-    ];
+      };
+    };
   };
 }
