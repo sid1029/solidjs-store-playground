@@ -11,25 +11,29 @@ import {
 	Stack,
 } from 'solid-bootstrap';
 
-import type { PersonDetails, Person } from '@/models/Company';
+import type { AccountDetails, Account } from '@/models/Company';
 import { useCompanyContext } from '@/models/CompanyDirContext';
 import { Key } from '@solid-primitives/keyed';
 
-interface PersonRowProps {
+interface AccountRowProps {
 	personIdx: number;
 }
 
-export default function PersonRow(props: PersonRowProps) {
-	const { people, setPeople, deletePersonAt, addDetailTo } =
-		useCompanyContext();
+export default function AccountRow(props: AccountRowProps) {
+	const {
+		accounts,
+		setAccount,
+		deleteAccountAt,
+		addAccountTo: addDetailTo,
+	} = useCompanyContext();
 
-	const _onEdit = (e: InputEvent, property: keyof Person) => {
+	const _onEdit = (e: InputEvent, property: keyof Account) => {
 		const val = (e.target as HTMLInputElement).value;
-		setPeople(props.personIdx, 'person', property, val);
+		setAccount(props.personIdx, 'account', property, val);
 	};
 
 	// Create derived signals that react to any change in props.
-	const currPerson = createMemo(() => people[props.personIdx].person);
+	const currPerson = createMemo(() => accounts[props.personIdx].account);
 
 	return (
 		<Col class='d-flex pt-2 flex-column gap-3'>
@@ -61,7 +65,7 @@ export default function PersonRow(props: PersonRowProps) {
 				<div class='vr' />
 				<Button
 					variant='danger'
-					onClick={() => deletePersonAt(props.personIdx)}
+					onClick={() => deleteAccountAt(props.personIdx)}
 				>
 					<i class='bi-trash' />
 				</Button>
@@ -71,50 +75,49 @@ export default function PersonRow(props: PersonRowProps) {
 					variant='primary'
 					onClick={() => addDetailTo(props.personIdx, true)}
 				>
-					Input Detail +
+					Add Income
 				</Button>
 				<Button
 					variant='primary'
 					onClick={() => addDetailTo(props.personIdx, false)}
 				>
-					+ Output Detail
+					Add Cost
 				</Button>
 			</ButtonGroup>
 			<Stack direction='horizontal' class='align-items-baseline' gap={2}>
-				<ConnectorGroup
-					personIdx={props.personIdx}
+				<BalanceSheet
+					accountIdx={props.personIdx}
 					isInput={true}
-					details={currPerson().inputs}
+					details={currPerson().income}
 				/>
-				<ConnectorGroup
-					personIdx={props.personIdx}
+				<BalanceSheet
+					accountIdx={props.personIdx}
 					isInput={false}
-					details={currPerson().outputs}
+					details={currPerson().spend}
 				/>
 			</Stack>
 		</Col>
 	);
 }
 
-interface ConnectorGroupProps {
-	personIdx: number;
+interface BalanceSheetProps {
+	accountIdx: number;
 	isInput: boolean;
-	details: PersonDetails;
-	class?: string;
+	details: AccountDetails;
 }
 
-function ConnectorGroup(props: ConnectorGroupProps) {
-	const { removeDetailFrom: removeConnectorFrom } = useCompanyContext();
+function BalanceSheet(props: BalanceSheetProps) {
+	const { removeAccountFrom } = useCompanyContext();
 
 	return (
-		<ListGroup style={{ width: '48%', flex: 1 }} class={props.class}>
+		<ListGroup style={{ 'max-width': '49%', flex: '0.5 1' }}>
 			<Key
 				each={props.details}
 				by='name'
 				fallback={
 					<Alert variant='primary' class='text-center'>
 						<i class='bi-exclamation-triangle-fill pe-2' />
-						Add {props.isInput ? 'Inputs' : 'Outputs'}
+						Add {props.isInput ? 'Income' : 'Spend'}
 					</Alert>
 				}
 			>
@@ -129,7 +132,7 @@ function ConnectorGroup(props: ConnectorGroupProps) {
 						<Button
 							variant='danger'
 							onClick={() =>
-								removeConnectorFrom(props.personIdx, props.isInput, idx())
+								removeAccountFrom(props.accountIdx, props.isInput, idx())
 							}
 						>
 							<i class='bi-trash' />

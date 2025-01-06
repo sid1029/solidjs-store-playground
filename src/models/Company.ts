@@ -7,7 +7,7 @@ export interface IDetail {
 	input: boolean;
 }
 
-export class PersonDetail implements IDetail {
+export class AccountDetail implements IDetail {
 	// name of this detail
 	name = '';
 	// display label
@@ -18,27 +18,27 @@ export class PersonDetail implements IDetail {
 	input = false;
 }
 
-export type PersonDetails = Array<PersonDetail>;
+export type AccountDetails = Array<AccountDetail>;
 
-export class Person {
+export class Account {
 	public id = '';
 	public lastName = '';
 	public firstName = '';
 	public title = '';
 
-	// list of input Details
-	public inputs: PersonDetails = [];
+	// list of account revenue income.
+	public income: AccountDetails = [];
 
-	// list of output Details
-	public outputs: PersonDetails = [];
+	// list of account spend income.
+	public spend: AccountDetails = [];
 
-	constructor(props: Partial<Person>) {
+	constructor(props: Partial<Account>) {
 		Object.assign(this, props);
 	}
 }
 
-export interface PersonUI {
-	person: Person;
+export interface AccountUI {
+	account: Account;
 	// location
 	x: number;
 	y: number;
@@ -54,31 +54,31 @@ export interface EquipmentUI {
 	y: number;
 }
 
-export const createFakeDetails = (isInput: boolean): PersonDetail => ({
+export const createFakeDetails = (isInput: boolean): AccountDetail => ({
 	name: faker.string.alphanumeric({ length: 10 }),
 	label: faker.lorem.word(),
 	revenue: faker.number.int({ min: 100, max: 500 }),
 	input: isInput,
 });
 
-export const createFakePerson = (): PersonUI => {
+export const createFakeAccount = (): AccountUI => {
 	// Store has to be explicitly created when object is created using 'new'.
 	// We can ignore the setter returned by createStore since the parent
 	// setter will still be able to reach into this object via path params
 	// in order to make edits.
-	// See PersonRow._onEdit(), CompanyDirectoryContextModel.addDetailTo() etc...
-	const [personStore] = createStore(
-		new Person({
+	// See AccountRow._onEdit(), CompanyDirectoryContextModel.addDetailTo() etc...
+	const [accountStore] = createStore(
+		new Account({
 			id: faker.string.uuid(),
 			lastName: faker.person.firstName(),
 			firstName: faker.person.lastName(),
 			title: faker.person.jobTitle(),
-			inputs: [],
-			outputs: [],
+			income: [],
+			spend: [],
 		}),
 	);
 	return {
-		person: personStore,
+		account: accountStore,
 		x: faker.number.int({ min: 10, max: 100 }),
 		y: faker.number.int({ min: 10, max: 100 }),
 	};
@@ -89,7 +89,7 @@ export const createFakeEquipment = (): EquipmentUI => ({
 	name: faker.commerce.productName(),
 	manufacturer: faker.commerce.department(),
 	contract: faker.commerce.productDescription(),
-	spend: faker.number.int({ min: 500, max: 65000 }),
+	spend: faker.number.int({ min: 500, max: 5000 }),
 	x: faker.number.int({ min: 10, max: 100 }),
 	y: faker.number.int({ min: 10, max: 100 }),
 });

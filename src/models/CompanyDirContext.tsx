@@ -4,67 +4,67 @@ import { createStore, produce, type SetStoreFunction } from 'solid-js/store';
 import {
 	createFakeDetails,
 	createFakeEquipment,
-	createFakePerson,
+	createFakeAccount,
 	type EquipmentUI,
-	type PersonDetail,
-	type PersonUI,
+	type AccountDetail,
+	type AccountUI,
 } from './Company';
 
 const INIT_COUNT = Math.floor(Math.random() * 20);
 
 // Global singleton data store that houses the state of the entire app.
 export class CompanyDirectoryContextModel {
-	public people: Array<PersonUI>;
-	public setPeople: SetStoreFunction<Array<PersonUI>>;
+	public accounts: Array<AccountUI>;
+	public setAccount: SetStoreFunction<Array<AccountUI>>;
 	public equipment: Array<EquipmentUI>;
 	public setEquipment: SetStoreFunction<Array<EquipmentUI>>;
 
 	constructor() {
-		[this.people, this.setPeople] = createStore<Array<PersonUI>>(
-			[...Array(INIT_COUNT)].map(createFakePerson),
+		[this.accounts, this.setAccount] = createStore<Array<AccountUI>>(
+			[...Array(INIT_COUNT)].map(createFakeAccount),
 		);
 		[this.equipment, this.setEquipment] = createStore<Array<EquipmentUI>>(
 			[...Array(INIT_COUNT)].map(createFakeEquipment),
 		);
 	}
 
-	public addFakePerson: VoidFunction = () => {
-		this.setPeople(this.people.length, createFakePerson);
+	public addFakeAccount: VoidFunction = () => {
+		this.setAccount(this.accounts.length, createFakeAccount);
 	};
 
 	public addFakeEquipment: VoidFunction = () => {
 		this.setEquipment(this.equipment.length, createFakeEquipment);
 	};
 
-	public deletePersonAt = (idx: number) => {
-		this.setPeople(produce((people) => people.splice(idx, 1)));
+	public deleteAccountAt = (idx: number) => {
+		this.setAccount(produce((account) => account.splice(idx, 1)));
 	};
 
 	public deleteEquipmentAt = (idx: number) => {
 		this.setEquipment(produce((equips) => equips.splice(idx, 1)));
 	};
 
-	public addDetailTo = (personIdx: number, isInput: boolean) => {
-		const p = this.people[personIdx].person;
-		const details = isInput ? p.inputs : p.outputs;
-		this.setPeople(
-			personIdx,
-			'person',
-			isInput ? 'inputs' : 'outputs',
+	public addAccountTo = (accountIdx: number, isIncome: boolean) => {
+		const account = this.accounts[accountIdx].account;
+		const details = isIncome ? account.income : account.spend;
+		this.setAccount(
+			accountIdx,
+			'account',
+			isIncome ? 'income' : 'spend',
 			details.length,
-			createFakeDetails(isInput),
+			createFakeDetails(isIncome),
 		);
 	};
 
-	public removeDetailFrom = (
-		personIdx: number,
-		isInput: boolean,
+	public removeAccountFrom = (
+		accountIdx: number,
+		isIncome: boolean,
 		connIdx: number,
 	) => {
-		this.setPeople(
-			personIdx,
-			'person',
-			isInput ? 'inputs' : 'outputs',
+		this.setAccount(
+			accountIdx,
+			'account',
+			isIncome ? 'income' : 'spend',
 			produce((details) => details.splice(connIdx, 1)),
 		);
 	};
@@ -78,13 +78,13 @@ export class CompanyDirectoryContextModel {
 
 	public get totalRevenue() {
 		const calculateRevFn = createMemo(() =>
-			this.people.reduce((acc, p) => {
-				const sumDeals = (dealTotal: number, detail: PersonDetail) =>
+			this.accounts.reduce((acc, p) => {
+				const sumDeals = (dealTotal: number, detail: AccountDetail) =>
 					dealTotal + detail.revenue;
 				return (
 					acc +
-					p.person.inputs.reduce(sumDeals, 0) +
-					p.person.outputs.reduce(sumDeals, 0)
+					p.account.income.reduce(sumDeals, 0) -
+					p.account.spend.reduce(sumDeals, 0)
 				);
 			}, 0),
 		);
@@ -102,7 +102,6 @@ export const CompanyContext = createContext<CompanyDirectoryContextModel>(
 );
 
 export function CompanyContextProvider(props: CompanyContextProps) {
-	console.log('Creatign company context.');
 	return (
 		<CompanyContext.Provider value={props.model}>
 			{props.children}

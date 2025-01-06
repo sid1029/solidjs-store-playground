@@ -2,6 +2,7 @@ import {
 	Alert,
 	Button,
 	ButtonGroup,
+	Card,
 	Col,
 	Container,
 	ListGroup,
@@ -11,61 +12,71 @@ import {
 import { Key } from '@solid-primitives/keyed';
 
 import EquipmentRow from '@/components/EquipmentRow';
-import PersonRow from '@/components/PersonRow';
+import AccountRow from '@/components/AccountRow';
 import { useCompanyContext } from '@/models/CompanyDirContext';
 
 export default function Root() {
 	const {
-		people,
+		accounts: people,
 		equipment,
-		addFakePerson,
+		addFakeAccount,
 		addFakeEquipment,
 		totalRevenue,
 		totalSpend,
 	} = useCompanyContext();
 
 	return (
-		<Container>
-			<Row class='my-3'>
-				<Col class='d-flex flex-row gap-5'>
-					<span>People count : {people.length}</span>
-					<span>Total revenue : ${totalRevenue()}</span>
+		<Container class='px-0'>
+			<Row class='my-3 sticky-top'>
+				<Col class='ps-0'>
+					<Card border='warning' class='my-2'>
+						<Card.Header>Accounts</Card.Header>
+						<Card.Body>
+							<Card.Title>Accounts : {people.length}</Card.Title>
+							<Card.Text>Total revenue : ${totalRevenue()}</Card.Text>
+						</Card.Body>
+					</Card>
 				</Col>
-				<Col class='d-flex flex-row gap-5'>
-					<span>Equip count : {equipment.length}</span>
-					<span>Equip total spend : ${totalSpend()}</span>
+				<Col class='ps-0'>
+					<Card border='warning' class='my-2'>
+						<Card.Header>Equipment</Card.Header>
+						<Card.Body>
+							<Card.Title>Equip count : {equipment.length}</Card.Title>
+							<Card.Text>Equip total spend : ${totalSpend()}</Card.Text>
+						</Card.Body>
+					</Card>
 				</Col>
 			</Row>
-			<Row class='my-3'>
-				<ButtonGroup>
-					<Button variant='outline-primary' onClick={addFakePerson}>
-						Add Person&nbsp;&nbsp;
-						<i class='bi-plus-circle-fill' />
+			<Row class='my-2'>
+				<ButtonGroup class='px-0'>
+					<Button class='mw-100' variant='outline-warning' onClick={addFakeAccount}>
+						Add Account
+						<i class='ps-2 bi-plus-circle-fill' />
 					</Button>
-					<Button variant='outline-primary' onClick={addFakeEquipment}>
-						<i class='bi-plus-circle-fill' />
-						&nbsp;&nbsp;Add Equipment
+					<Button class='mw-100' variant='outline-warning' onClick={addFakeEquipment}>
+						<i class='pe-2 bi-plus-circle-fill' />
+						Add Equipment
 					</Button>
 				</ButtonGroup>
 			</Row>
-			<Row xs={2}>
+			<Row class='my-3' xs={2}>
 				<ListGroup numbered={true}>
 					<Key
 						each={people}
-						by={(uiPerson) => uiPerson.person.id}
+						by={(uiAccount) => uiAccount.account.id}
 						fallback={
 							<Alert variant='warning' class='text-center'>
 								<i class='bi-exclamation-triangle-fill pe-2' />
-								Add People !
+								Add Accounts !
 							</Alert>
 						}
 					>
 						{(uiPerson, idx) => (
-							<ListGroup.Item itemId={uiPerson().person.id}>
-								{uiPerson().person.firstName}&nbsp;
-								{uiPerson().person.lastName}&nbsp;
-								{uiPerson().person.title}
-								<PersonRow personIdx={idx()} />
+							<ListGroup.Item itemId={uiPerson().account.id}>
+								{uiPerson().account.firstName}&nbsp;
+								{uiPerson().account.lastName}&nbsp;
+								{uiPerson().account.title}
+								<AccountRow personIdx={idx()} />
 							</ListGroup.Item>
 						)}
 					</Key>
