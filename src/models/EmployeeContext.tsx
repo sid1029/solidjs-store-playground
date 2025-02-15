@@ -27,6 +27,10 @@ export class EmployeeDirectoryContextModel {
 		return this.employees[id];
 	};
 
+	public employeeCount = () => {
+		return Object.keys(this.employees).length;
+	};
+
 	public getEmployees = () => {
 		return this.employees;
 	};

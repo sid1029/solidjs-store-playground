@@ -27,7 +27,9 @@ export default function Root() {
 		totalRevenue,
 		totalSpend,
 	} = useCompanyContext();
-	const { getEmployees, addFakeEmployee, totalSalary } = useEmployeeContext();
+
+	const { getEmployees, employeeCount, addFakeEmployee, totalSalary } =
+		useEmployeeContext();
 
 	return (
 		<Container class='px-0'>
@@ -41,10 +43,20 @@ export default function Root() {
 					Add Employee
 				</Button>
 			</Row>
-			<Row class='my-2'>Emp Total Salary : ${totalSalary()}</Row>
+			<Row class='my-2'>
+				Employees ({employeeCount()}). Total Salary : ${totalSalary()}
+			</Row>
 			<Row class='my-2'>
 				<ListGroup numbered={true}>
-					<Entries of={getEmployees()}>
+					<Entries
+						of={getEmployees()}
+						fallback={
+							<Alert variant='warning' class='text-center'>
+								<i class='bi-exclamation-triangle-fill pe-2' />
+								Add Employees !
+							</Alert>
+						}
+					>
 						{(empId, empUi) => (
 							<ListGroup.Item itemId={empId}>
 								<span class='text-nowrap text-truncate fw-bold'>
