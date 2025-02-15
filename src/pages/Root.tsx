@@ -4,16 +4,18 @@ import {
 	ButtonGroup,
 	Card,
 	Col,
+	CloseButton,
 	Container,
 	ListGroup,
 	Row,
 } from 'solid-bootstrap';
 
-import { Key } from '@solid-primitives/keyed';
+import { Entries, Key } from '@solid-primitives/keyed';
 
 import EquipmentRow from '@/components/EquipmentRow';
 import AccountRow from '@/components/AccountRow';
 import { useCompanyContext } from '@/models/CompanyDirContext';
+import { useEmployeeContext } from '@/models/EmployeeContext';
 
 export default function Root() {
 	const {
@@ -24,9 +26,40 @@ export default function Root() {
 		totalRevenue,
 		totalSpend,
 	} = useCompanyContext();
+	const { getEmployees, addFakeEmployee, deleteEmployee } =
+		useEmployeeContext();
 
 	return (
 		<Container class='px-0'>
+			<Row class='my-2'>
+				<Button
+					class='mw-100'
+					variant='outline-warning'
+					onClick={addFakeEmployee}
+				>
+					<i class='pe-2 bi-plus-circle-fill' />
+					Add Employee
+				</Button>
+			</Row>
+			<Row class='my-3'>
+				<ListGroup numbered={true}>
+					<Entries of={getEmployees()}>
+						{(empId, empUi) => (
+							<ListGroup.Item itemId={empId}>
+								<span class='fw-bold'>
+									{empUi().employee.firstName}&nbsp;
+									{empUi().employee.lastName} - {empUi().employee.title}
+								</span>
+								<CloseButton
+									variant='white'
+									class='float-end'
+									onClick={() => deleteEmployee(empId)}
+								/>
+							</ListGroup.Item>
+						)}
+					</Entries>
+				</ListGroup>
+			</Row>
 			<Row class='my-3 sticky-top'>
 				<Col class='ps-0'>
 					<Card border='warning' class='my-2'>
@@ -49,11 +82,19 @@ export default function Root() {
 			</Row>
 			<Row class='my-2'>
 				<ButtonGroup class='px-0'>
-					<Button class='mw-100' variant='outline-warning' onClick={addFakeAccount}>
+					<Button
+						class='mw-100'
+						variant='outline-warning'
+						onClick={addFakeAccount}
+					>
 						Add Account
 						<i class='ps-2 bi-plus-circle-fill' />
 					</Button>
-					<Button class='mw-100' variant='outline-warning' onClick={addFakeEquipment}>
+					<Button
+						class='mw-100'
+						variant='outline-warning'
+						onClick={addFakeEquipment}
+					>
 						<i class='pe-2 bi-plus-circle-fill' />
 						Add Equipment
 					</Button>

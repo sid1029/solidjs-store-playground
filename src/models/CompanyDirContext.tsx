@@ -77,7 +77,7 @@ export class CompanyDirectoryContextModel {
 	}
 
 	public get totalRevenue() {
-		const calculateRevFn = createMemo(() =>
+		return createMemo(() =>
 			this.accounts.reduce((acc, p) => {
 				const sumDeals = (dealTotal: number, detail: AccountDetail) =>
 					dealTotal + detail.revenue;
@@ -88,7 +88,6 @@ export class CompanyDirectoryContextModel {
 				);
 			}, 0),
 		);
-		return calculateRevFn;
 	}
 }
 
