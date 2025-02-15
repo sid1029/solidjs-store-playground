@@ -4,7 +4,6 @@ import {
 	ButtonGroup,
 	Card,
 	Col,
-	CloseButton,
 	Container,
 	ListGroup,
 	Row,
@@ -16,18 +15,18 @@ import EquipmentRow from '@/components/EquipmentRow';
 import AccountRow from '@/components/AccountRow';
 import { useCompanyContext } from '@/models/CompanyDirContext';
 import { useEmployeeContext } from '@/models/EmployeeContext';
+import EmployeeRow from '@/components/EmployeeRow';
 
 export default function Root() {
 	const {
-		accounts: people,
+		accounts,
 		equipment,
 		addFakeAccount,
 		addFakeEquipment,
 		totalRevenue,
 		totalSpend,
 	} = useCompanyContext();
-	const { getEmployees, addFakeEmployee, deleteEmployee } =
-		useEmployeeContext();
+	const { getEmployees, addFakeEmployee, totalSalary } = useEmployeeContext();
 
 	return (
 		<Container class='px-0'>
@@ -41,31 +40,25 @@ export default function Root() {
 					Add Employee
 				</Button>
 			</Row>
-			<Row class='my-3'>
+			<Row class='my-2'>Emp Total Salary : ${totalSalary()}</Row>
+			<Row class='my-2'>
 				<ListGroup numbered={true}>
 					<Entries of={getEmployees()}>
-						{(empId, empUi) => (
+						{(empId) => (
 							<ListGroup.Item itemId={empId}>
-								<span class='fw-bold'>
-									{empUi().employee.firstName}&nbsp;
-									{empUi().employee.lastName} - {empUi().employee.title}
-								</span>
-								<CloseButton
-									variant='white'
-									class='float-end'
-									onClick={() => deleteEmployee(empId)}
-								/>
+								<EmployeeRow empId={empId} />
 							</ListGroup.Item>
 						)}
 					</Entries>
 				</ListGroup>
 			</Row>
+			<hr />
 			<Row class='my-3 sticky-top'>
 				<Col class='ps-0'>
 					<Card border='warning' class='my-2'>
 						<Card.Header>Accounts</Card.Header>
 						<Card.Body>
-							<Card.Title>Accounts : {people.length}</Card.Title>
+							<Card.Title>Accounts : {accounts.length}</Card.Title>
 							<Card.Text>Total revenue : ${totalRevenue()}</Card.Text>
 						</Card.Body>
 					</Card>
@@ -103,7 +96,7 @@ export default function Root() {
 			<Row class='my-3' xs={2}>
 				<ListGroup numbered={true}>
 					<Key
-						each={people}
+						each={accounts}
 						by={(uiAccount) => uiAccount.account.id}
 						fallback={
 							<Alert variant='warning' class='text-center'>

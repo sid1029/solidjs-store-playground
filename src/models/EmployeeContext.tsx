@@ -4,6 +4,8 @@ import { createStore, produce, type SetStoreFunction } from 'solid-js/store';
 import { createFakeEmployee, type EmployeeDict } from './Employee';
 import { faker } from '@faker-js/faker';
 
+const INIT_COUNT = Math.floor(Math.random() * 20);
+
 // Global singleton data store that houses the state of the entire app.
 export class EmployeeDirectoryContextModel {
 	public employees: EmployeeDict;
@@ -12,7 +14,12 @@ export class EmployeeDirectoryContextModel {
 	constructor() {
 		[this.employees, this.setEmployees] = createStore<EmployeeDict>(
 			// Generate fake data with INIT_COUNT no. of employee entries.
-			{ [faker.string.uuid()]: createFakeEmployee() },
+			Object.fromEntries(
+				Array.from({ length: INIT_COUNT }, () => [
+					faker.string.uuid(),
+					createFakeEmployee(),
+				]),
+			),
 		);
 	}
 
