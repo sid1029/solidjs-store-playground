@@ -26,21 +26,14 @@ export default function EmployeeRow(props: EmployeeRowProps) {
 		}
 	};
 
-	const currEmp = createMemo(() => employees[props.empId]);
-
-	const empName = createMemo(
-		() => `${currEmp().employee.firstName} ${currEmp().employee.lastName}`,
-	);
+	const currEmp = createMemo(() => employees[props.empId].employee);
 
 	return (
 		<Col class='d-flex pt-2 flex-column gap-3'>
-			<span class='text-nowrap text-truncate'>
-				{empName()} -{currEmp().employee.title}
-			</span>
 			<Stack direction='horizontal' class='align-items-baseline' gap={2}>
 				<FormGroup as={Col} controlId='firstName'>
 					<Form.Control
-						value={currEmp().employee.firstName}
+						value={currEmp().firstName}
 						onInput={(evt) => _editProp(evt, 'firstName')}
 						type='text'
 						placeholder='First Name'
@@ -48,7 +41,7 @@ export default function EmployeeRow(props: EmployeeRowProps) {
 				</FormGroup>
 				<FormGroup as={Col} controlId='lastName'>
 					<Form.Control
-						value={currEmp().employee.lastName}
+						value={currEmp().lastName}
 						onInput={(evt) => _editProp(evt, 'lastName')}
 						type='text'
 						placeholder='Last Name'
@@ -56,7 +49,7 @@ export default function EmployeeRow(props: EmployeeRowProps) {
 				</FormGroup>
 				<FormGroup as={Col} controlId='salary'>
 					<Form.Control
-						value={currEmp().employee.salary}
+						value={currEmp().salary}
 						onInput={(evt) => _editProp(evt, 'salary')}
 						type='number'
 						placeholder='Salary'

@@ -1,5 +1,6 @@
 import {
 	Alert,
+	Badge,
 	Button,
 	ButtonGroup,
 	Card,
@@ -44,8 +45,15 @@ export default function Root() {
 			<Row class='my-2'>
 				<ListGroup numbered={true}>
 					<Entries of={getEmployees()}>
-						{(empId) => (
+						{(empId, empUi) => (
 							<ListGroup.Item itemId={empId}>
+								<span class='text-nowrap text-truncate fw-bold'>
+									{empUi().employee.firstName} {empUi().employee.lastName} -{' '}
+									{empUi().employee.title}
+								</span>
+								<Badge class='float-end font-monospace' bg='secondary'>
+									{empId}
+								</Badge>
 								<EmployeeRow empId={empId} />
 							</ListGroup.Item>
 						)}
