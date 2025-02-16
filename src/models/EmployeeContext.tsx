@@ -12,8 +12,8 @@ export class EmployeeDirectoryContextModel {
 	public setEmployees: SetStoreFunction<EmployeeDict>;
 
 	constructor() {
+		// Generate fake data with INIT_COUNT no. of employee entries.
 		[this.employees, this.setEmployees] = createStore<EmployeeDict>(
-			// Generate fake data with INIT_COUNT no. of employee entries.
 			Object.fromEntries(
 				Array.from({ length: INIT_COUNT }, () => [
 					faker.string.uuid(),
@@ -31,10 +31,6 @@ export class EmployeeDirectoryContextModel {
 		return Object.keys(this.employees).length;
 	};
 
-	public getEmployees = () => {
-		return this.employees;
-	};
-
 	public addFakeEmployee: VoidFunction = () => {
 		this.setEmployees(faker.string.uuid(), createFakeEmployee);
 	};
@@ -45,10 +41,6 @@ export class EmployeeDirectoryContextModel {
 				delete dict[id];
 			}),
 		);
-	};
-
-	public addEmployee = (employeeId: string) => {
-		this.setEmployees(employeeId, createFakeEmployee());
 	};
 
 	public get totalSalary() {
@@ -64,7 +56,7 @@ export class EmployeeDirectoryContextModel {
 
 interface EmployeeContextProps {
 	children: JSX.Element;
-	model: EmployeeDirectoryContextModel;
+	value: EmployeeDirectoryContextModel;
 }
 
 export const EmployeeContext = createContext<EmployeeDirectoryContextModel>(
@@ -73,7 +65,7 @@ export const EmployeeContext = createContext<EmployeeDirectoryContextModel>(
 
 export function EmployeeContextProvider(props: EmployeeContextProps) {
 	return (
-		<EmployeeContext.Provider value={props.model}>
+		<EmployeeContext.Provider value={props.value}>
 			{props.children}
 		</EmployeeContext.Provider>
 	);

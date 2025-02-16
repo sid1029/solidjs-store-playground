@@ -12,6 +12,8 @@ interface EmployeeRowProps {
 export default function EmployeeRow(props: EmployeeRowProps) {
 	const { employees, setEmployees, deleteEmployee } = useEmployeeContext();
 
+	const currEmp = createMemo(() => employees[props.empId].employee);
+
 	const _editProp = (e: InputEvent, property: keyof Employee) => {
 		const inputElem = e.target as HTMLInputElement;
 		const value = inputElem.value;
@@ -25,8 +27,6 @@ export default function EmployeeRow(props: EmployeeRowProps) {
 			setEmployees(props.empId, 'employee', property, value);
 		}
 	};
-
-	const currEmp = createMemo(() => employees[props.empId].employee);
 
 	return (
 		<Col class='d-flex pt-2 flex-column gap-3'>

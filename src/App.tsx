@@ -1,3 +1,4 @@
+import { MultiProvider } from '@solid-primitives/context';
 import './App.scss';
 import {
 	CompanyContextProvider,
@@ -11,11 +12,14 @@ import Root from './pages/Root';
 
 function App() {
 	return (
-		<CompanyContextProvider model={new CompanyDirectoryContextModel()}>
-			<EmployeeContextProvider model={new EmployeeDirectoryContextModel()}>
-				<Root />
-			</EmployeeContextProvider>
-		</CompanyContextProvider>
+		<MultiProvider
+			values={[
+				[CompanyContextProvider, new CompanyDirectoryContextModel()],
+				[EmployeeContextProvider, new EmployeeDirectoryContextModel()],
+			]}
+		>
+			<Root />
+		</MultiProvider>
 	);
 }
 

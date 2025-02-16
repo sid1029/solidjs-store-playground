@@ -28,7 +28,7 @@ export default function Root() {
 		totalSpend,
 	} = useCompanyContext();
 
-	const { getEmployees, employeeCount, addFakeEmployee, totalSalary } =
+	const { employees, employeeCount, addFakeEmployee, totalSalary } =
 		useEmployeeContext();
 
 	return (
@@ -44,12 +44,18 @@ export default function Root() {
 				</Button>
 			</Row>
 			<Row class='my-2'>
-				Employees ({employeeCount()}). Total Salary : ${totalSalary()}
+				<Card border='primary' class='my-2'>
+					<Card.Header>Employees</Card.Header>
+					<Card.Body>
+						<Card.Title>Employees : {employeeCount()}</Card.Title>
+						<Card.Text>Total Salary : ${totalSalary()}</Card.Text>
+					</Card.Body>
+				</Card>
 			</Row>
 			<Row class='my-2'>
 				<ListGroup numbered={true}>
 					<Entries
-						of={getEmployees()}
+						of={employees}
 						fallback={
 							<Alert variant='warning' class='text-center'>
 								<i class='bi-exclamation-triangle-fill pe-2' />
@@ -75,7 +81,7 @@ export default function Root() {
 			<hr />
 			<Row class='my-3 sticky-top'>
 				<Col class='ps-0'>
-					<Card border='warning' class='my-2'>
+					<Card border='primary' class='my-2'>
 						<Card.Header>Accounts</Card.Header>
 						<Card.Body>
 							<Card.Title>Accounts : {accounts.length}</Card.Title>
@@ -84,7 +90,7 @@ export default function Root() {
 					</Card>
 				</Col>
 				<Col class='ps-0'>
-					<Card border='warning' class='my-2'>
+					<Card border='primary' class='my-2'>
 						<Card.Header>Equipment</Card.Header>
 						<Card.Body>
 							<Card.Title>Equip count : {equipment.length}</Card.Title>

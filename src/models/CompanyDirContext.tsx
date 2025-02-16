@@ -93,7 +93,7 @@ export class CompanyDirectoryContextModel {
 
 interface CompanyContextProps {
 	children: JSX.Element;
-	model: CompanyDirectoryContextModel;
+	value: CompanyDirectoryContextModel;
 }
 
 export const CompanyContext = createContext<CompanyDirectoryContextModel>(
@@ -102,7 +102,7 @@ export const CompanyContext = createContext<CompanyDirectoryContextModel>(
 
 export function CompanyContextProvider(props: CompanyContextProps) {
 	return (
-		<CompanyContext.Provider value={props.model}>
+		<CompanyContext.Provider value={props.value}>
 			{props.children}
 		</CompanyContext.Provider>
 	);
