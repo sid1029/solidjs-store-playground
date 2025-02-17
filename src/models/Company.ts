@@ -22,6 +22,7 @@ export type AccountDetails = Array<AccountDetail>;
 
 export class Account {
 	public id = '';
+	public emoji = '';
 	public lastName = '';
 	public firstName = '';
 	public title = '';
@@ -48,6 +49,7 @@ export type AccountDict = Record<string, AccountUI>;
 
 export interface EquipmentUI {
 	id: string;
+	emoji: string;
 	name: string;
 	manufacturer: string;
 	contract: string;
@@ -74,6 +76,7 @@ export const createFakeAccount = (): AccountUI => {
 	const [accountStore] = createStore(
 		new Account({
 			id: faker.string.uuid(),
+			emoji: faker.internet.emoji({ types: ['person'] }),
 			lastName: faker.person.firstName(),
 			firstName: faker.person.lastName(),
 			title: faker.person.jobTitle(),
@@ -90,8 +93,9 @@ export const createFakeAccount = (): AccountUI => {
 
 export const createFakeEquipment = (): EquipmentUI => ({
 	id: faker.string.uuid(),
+	emoji: faker.internet.emoji({ types: ['object'] }),
 	name: faker.commerce.productName(),
-	manufacturer: faker.commerce.department(),
+	manufacturer: faker.company.name(),
 	contract: faker.commerce.productDescription(),
 	spend: faker.number.int({ min: 500, max: 5000 }),
 	x: faker.number.int({ min: 10, max: 100 }),

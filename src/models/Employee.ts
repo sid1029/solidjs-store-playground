@@ -14,6 +14,7 @@ export type EmployeeDetail = {
 
 export type Employee = {
 	id: string;
+	emoji: string;
 	lastName: string;
 	firstName: string;
 	title: string;
@@ -43,6 +44,7 @@ export const createFakeDetails = (isInput: boolean): EmployeeDetail => ({
 export const createFakeEmployee = (): EmployeeUI => {
 	const [employeeStore] = createStore({
 			id: faker.string.uuid(),
+			emoji: faker.internet.emoji({ types: ['person'] }),
 			lastName: faker.person.firstName(),
 			firstName: faker.person.lastName(),
 			title: faker.person.jobTitle(),

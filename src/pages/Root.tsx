@@ -55,7 +55,7 @@ export default function Root() {
 				</Card>
 			</Row>
 			<Row class='my-2'>
-				<ListGroup numbered={true}>
+				<ListGroup numbered={false}>
 					<Entries
 						of={employees}
 						fallback={
@@ -68,6 +68,7 @@ export default function Root() {
 						{(empId, empUi) => (
 							<ListGroup.Item itemId={empId}>
 								<span class='text-nowrap text-truncate fw-bold'>
+									{empUi().employee.emoji} - 
 									{empUi().employee.firstName} {empUi().employee.lastName} -{' '}
 									{empUi().employee.title}
 								</span>
@@ -134,7 +135,7 @@ export default function Root() {
 					>
 						{(accountId, uiPerson) => (
 							<ListGroup.Item itemId={uiPerson().account.id}>
-								{uiPerson().account.firstName}&nbsp;
+								{uiPerson().account.emoji} - {uiPerson().account.firstName}&nbsp;
 								{uiPerson().account.lastName}&nbsp;
 								{uiPerson().account.title}
 								<AccountRow accountId={accountId} />
@@ -154,7 +155,7 @@ export default function Root() {
 					>
 						{(equipmentId, uiEquip) => (
 							<ListGroup.Item itemId={uiEquip().id}>
-								{uiEquip().manufacturer} - {uiEquip().name}
+								{uiEquip().emoji} - {uiEquip().manufacturer} - {uiEquip().name}
 								<EquipmentRow equipId={equipmentId} />
 							</ListGroup.Item>
 						)}
