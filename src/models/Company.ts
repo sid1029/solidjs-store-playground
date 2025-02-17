@@ -1,4 +1,4 @@
-import { faker } from '@faker-js/faker';
+import { faker } from '@faker-js/faker/locale/en_US';
 import { createStore } from 'solid-js/store';
 
 export interface IDetail {

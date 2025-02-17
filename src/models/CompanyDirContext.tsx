@@ -57,11 +57,19 @@ export class CompanyDirectoryContextModel {
 	};
 
 	public deleteAccountAt = (id: string) => {
-		this.setAccount(produce((accounts: AccountDict) => delete accounts[id]));
+		this.setAccount(
+			produce((accounts: AccountDict) => {
+				delete accounts[id];
+			}),
+		);
 	};
 
 	public deleteEquipmentAt = (id: string) => {
-		this.setEquipment(produce((equips: EquipmentDict) => delete equips[id]));
+		this.setEquipment(
+			produce((equips: EquipmentDict) => {
+				delete equips[id];
+			}),
+		);
 	};
 
 	public addDetailTo = (accountId: string, isIncome: boolean) => {

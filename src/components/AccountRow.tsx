@@ -2,6 +2,7 @@ import { createMemo } from 'solid-js';
 
 import {
 	Alert,
+	Badge,
 	Button,
 	ButtonGroup,
 	Col,
@@ -33,6 +34,9 @@ export default function AccountRow(props: AccountRowProps) {
 
 	return (
 		<Col class='d-flex pt-2 flex-column gap-3'>
+			<Badge class='float-end font-monospace' bg='secondary'>
+				{currAccount().id}
+			</Badge>
 			<Stack direction='horizontal' class='align-items-baseline' gap={2}>
 				<FormGroup as={Col} controlId='name'>
 					<Form.Control
