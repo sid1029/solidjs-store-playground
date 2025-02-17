@@ -10,7 +10,7 @@ import {
 	Row,
 } from 'solid-bootstrap';
 
-import { Entries, Key } from '@solid-primitives/keyed';
+import { Entries } from '@solid-primitives/keyed';
 
 import EquipmentRow from '@/components/EquipmentRow';
 import AccountRow from '@/components/AccountRow';
@@ -24,6 +24,8 @@ export default function Root() {
 		equipment,
 		addFakeAccount,
 		addFakeEquipment,
+		accountCount,
+		equipmentCount,
 		totalRevenue,
 		totalSpend,
 	} = useCompanyContext();
@@ -84,7 +86,7 @@ export default function Root() {
 					<Card border='primary' class='my-2'>
 						<Card.Header>Accounts</Card.Header>
 						<Card.Body>
-							<Card.Title>Accounts : {accounts.length}</Card.Title>
+							<Card.Title>Accounts : {accountCount()}</Card.Title>
 							<Card.Text>Total revenue : ${totalRevenue()}</Card.Text>
 						</Card.Body>
 					</Card>
@@ -93,7 +95,7 @@ export default function Root() {
 					<Card border='primary' class='my-2'>
 						<Card.Header>Equipment</Card.Header>
 						<Card.Body>
-							<Card.Title>Equip count : {equipment.length}</Card.Title>
+							<Card.Title>Equip count : {equipmentCount()}</Card.Title>
 							<Card.Text>Equip total spend : ${totalSpend()}</Card.Text>
 						</Card.Body>
 					</Card>
@@ -121,9 +123,8 @@ export default function Root() {
 			</Row>
 			<Row class='my-3' xs={2}>
 				<ListGroup numbered={true}>
-					<Key
-						each={accounts}
-						by={(uiAccount) => uiAccount.account.id}
+					<Entries
+						of={accounts}
 						fallback={
 							<Alert variant='warning' class='text-center'>
 								<i class='bi-exclamation-triangle-fill pe-2' />
@@ -131,20 +132,19 @@ export default function Root() {
 							</Alert>
 						}
 					>
-						{(uiPerson, idx) => (
+						{(accountId, uiPerson) => (
 							<ListGroup.Item itemId={uiPerson().account.id}>
 								{uiPerson().account.firstName}&nbsp;
 								{uiPerson().account.lastName}&nbsp;
 								{uiPerson().account.title}
-								<AccountRow personIdx={idx()} />
+								<AccountRow accountId={accountId} />
 							</ListGroup.Item>
 						)}
-					</Key>
+					</Entries>
 				</ListGroup>
 				<ListGroup numbered={true}>
-					<Key
-						each={equipment}
-						by='id'
+					<Entries
+						of={equipment}
 						fallback={
 							<Alert variant='warning' class='text-center'>
 								<i class='bi-exclamation-triangle-fill pe-2' />
@@ -152,13 +152,13 @@ export default function Root() {
 							</Alert>
 						}
 					>
-						{(uiEquip, idx) => (
+						{(equipmentId, uiEquip) => (
 							<ListGroup.Item itemId={uiEquip().id}>
 								{uiEquip().manufacturer} - {uiEquip().name}
-								<EquipmentRow equipIdx={idx()} />
+								<EquipmentRow equipId={equipmentId} />
 							</ListGroup.Item>
 						)}
-					</Key>
+					</Entries>
 				</ListGroup>
 			</Row>
 		</Container>

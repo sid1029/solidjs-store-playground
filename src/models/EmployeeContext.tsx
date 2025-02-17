@@ -2,7 +2,6 @@ import { createContext, useContext, type JSX, createMemo } from 'solid-js';
 import { createStore, produce, type SetStoreFunction } from 'solid-js/store';
 
 import { createFakeEmployee, type EmployeeDict } from './Employee';
-import { faker } from '@faker-js/faker';
 
 const INIT_COUNT = Math.floor(Math.random() * 20);
 
@@ -15,10 +14,10 @@ export class EmployeeDirectoryContextModel {
 		// Generate fake data with INIT_COUNT no. of employee entries.
 		[this.employees, this.setEmployees] = createStore<EmployeeDict>(
 			Object.fromEntries(
-				Array.from({ length: INIT_COUNT }, () => [
-					faker.string.uuid(),
-					createFakeEmployee(),
-				]),
+				Array.from({ length: INIT_COUNT }, () => {
+					const fakeEmp = createFakeEmployee();
+					return [fakeEmp.employee.id, createFakeEmployee()];
+				}),
 			),
 		);
 	}
@@ -32,7 +31,8 @@ export class EmployeeDirectoryContextModel {
 	};
 
 	public addFakeEmployee: VoidFunction = () => {
-		this.setEmployees(faker.string.uuid(), createFakeEmployee);
+		const fakeEmp = createFakeEmployee();
+		this.setEmployees(fakeEmp.employee.id, createFakeEmployee);
 	};
 
 	public deleteEmployee = (id: string) => {

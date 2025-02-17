@@ -6,7 +6,7 @@ import type { EquipmentUI } from '@/models/Company';
 import { useCompanyContext } from '@/models/CompanyDirContext';
 
 interface EquipmentRowProps {
-	equipIdx: number;
+	equipId: string;
 }
 
 export default function EquipmentRow(props: EquipmentRowProps) {
@@ -20,14 +20,14 @@ export default function EquipmentRow(props: EquipmentRowProps) {
 			if (Number.isNaN(num)) {
 				num = 0;
 			}
-			setEquipment(props.equipIdx, property, num);
+			setEquipment(props.equipId, property, num);
 		} else {
-			setEquipment(props.equipIdx, property, value);
+			setEquipment(props.equipId, property, value);
 		}
 	};
 
 	// Create a computed signal that sums the length of all equip properties.
-	const currEquip = createMemo(() => equipment[props.equipIdx]);
+	const currEquip = createMemo(() => equipment[props.equipId]);
 
 	return (
 		<Col class='d-flex pt-2 flex-column gap-3'>
@@ -68,7 +68,7 @@ export default function EquipmentRow(props: EquipmentRowProps) {
 				<div class='vr' />
 				<Button
 					variant='danger'
-					onClick={() => deleteEquipmentAt(props.equipIdx)}
+					onClick={() => deleteEquipmentAt(props.equipId)}
 				>
 					<i class='bi-trash' />
 				</Button>

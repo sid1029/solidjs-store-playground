@@ -5,50 +5,70 @@ import {
 	createFakeDetails,
 	createFakeEquipment,
 	createFakeAccount,
-	type EquipmentUI,
 	type AccountDetail,
-	type AccountUI,
+	type AccountDict,
+	type EquipmentDict,
 } from './Company';
 
 const INIT_COUNT = Math.floor(Math.random() * 20);
 
 // Global singleton data store that houses the state of the entire app.
 export class CompanyDirectoryContextModel {
-	public accounts: Array<AccountUI>;
-	public setAccount: SetStoreFunction<Array<AccountUI>>;
-	public equipment: Array<EquipmentUI>;
-	public setEquipment: SetStoreFunction<Array<EquipmentUI>>;
+	public accounts: AccountDict;
+	public setAccount: SetStoreFunction<AccountDict>;
+	public equipment: EquipmentDict;
+	public setEquipment: SetStoreFunction<EquipmentDict>;
 
 	constructor() {
-		[this.accounts, this.setAccount] = createStore<Array<AccountUI>>(
-			[...Array(INIT_COUNT)].map(createFakeAccount),
+		[this.accounts, this.setAccount] = createStore<AccountDict>(
+			Object.fromEntries(
+				Array.from({ length: INIT_COUNT }, () => {
+					const fakeAccount = createFakeAccount();
+					return [fakeAccount.account.id, fakeAccount];
+				}),
+			),
 		);
-		[this.equipment, this.setEquipment] = createStore<Array<EquipmentUI>>(
-			[...Array(INIT_COUNT)].map(createFakeEquipment),
+		[this.equipment, this.setEquipment] = createStore<EquipmentDict>(
+			Object.fromEntries(
+				Array.from({ length: INIT_COUNT }, () => {
+					const fakeEquip = createFakeEquipment();
+					return [fakeEquip.id, fakeEquip];
+				}),
+			),
 		);
 	}
 
 	public addFakeAccount: VoidFunction = () => {
-		this.setAccount(this.accounts.length, createFakeAccount);
+		const fakeAccount = createFakeAccount();
+		this.setAccount(fakeAccount.account.id, fakeAccount);
+	};
+
+	public accountCount = () => {
+		return Object.keys(this.accounts).length;
 	};
 
 	public addFakeEquipment: VoidFunction = () => {
-		this.setEquipment(this.equipment.length, createFakeEquipment);
+		const fakeEquip = createFakeEquipment();
+		this.setEquipment(fakeEquip.id, fakeEquip);
 	};
 
-	public deleteAccountAt = (idx: number) => {
-		this.setAccount(produce((account) => account.splice(idx, 1)));
+	public equipmentCount = () => {
+		return Object.keys(this.equipment).length;
 	};
 
-	public deleteEquipmentAt = (idx: number) => {
-		this.setEquipment(produce((equips) => equips.splice(idx, 1)));
+	public deleteAccountAt = (id: string) => {
+		this.setAccount(produce((accounts: AccountDict) => delete accounts[id]));
 	};
 
-	public addAccountTo = (accountIdx: number, isIncome: boolean) => {
-		const account = this.accounts[accountIdx].account;
+	public deleteEquipmentAt = (id: string) => {
+		this.setEquipment(produce((equips: EquipmentDict) => delete equips[id]));
+	};
+
+	public addDetailTo = (accountId: string, isIncome: boolean) => {
+		const account = this.accounts[accountId].account;
 		const details = isIncome ? account.income : account.spend;
 		this.setAccount(
-			accountIdx,
+			accountId,
 			'account',
 			isIncome ? 'income' : 'spend',
 			details.length,
@@ -57,12 +77,12 @@ export class CompanyDirectoryContextModel {
 	};
 
 	public removeAccountFrom = (
-		accountIdx: number,
+		accountId: string,
 		isIncome: boolean,
 		connIdx: number,
 	) => {
 		this.setAccount(
-			accountIdx,
+			accountId,
 			'account',
 			isIncome ? 'income' : 'spend',
 			produce((details) => details.splice(connIdx, 1)),
@@ -71,20 +91,23 @@ export class CompanyDirectoryContextModel {
 
 	public get totalSpend() {
 		const calculateTotalFn = createMemo(() =>
-			this.equipment.reduce((acc, e) => acc + e.spend, 0),
+			Object.entries(this.equipment).reduce(
+				(acc, [_equipId, equip]) => acc + equip.spend,
+				0,
+			),
 		);
 		return calculateTotalFn;
 	}
 
 	public get totalRevenue() {
 		return createMemo(() =>
-			this.accounts.reduce((acc, p) => {
+			Object.entries(this.accounts).reduce((acc, [_accountId, account]) => {
 				const sumDeals = (dealTotal: number, detail: AccountDetail) =>
 					dealTotal + detail.revenue;
 				return (
 					acc +
-					p.account.income.reduce(sumDeals, 0) -
-					p.account.spend.reduce(sumDeals, 0)
+					account.account.income.reduce(sumDeals, 0) -
+					account.account.spend.reduce(sumDeals, 0)
 				);
 			}, 0),
 		);

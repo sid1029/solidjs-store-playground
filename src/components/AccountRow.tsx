@@ -16,31 +16,27 @@ import { useCompanyContext } from '@/models/CompanyDirContext';
 import { Key } from '@solid-primitives/keyed';
 
 interface AccountRowProps {
-	personIdx: number;
+	accountId: string;
 }
 
 export default function AccountRow(props: AccountRowProps) {
-	const {
-		accounts,
-		setAccount,
-		deleteAccountAt,
-		addAccountTo: addDetailTo,
-	} = useCompanyContext();
+	const { accounts, setAccount, deleteAccountAt, addDetailTo } =
+		useCompanyContext();
+
+	// Create derived signals that react to any change in props.
+	const currAccount = createMemo(() => accounts[props.accountId].account);
 
 	const _onEdit = (e: InputEvent, property: keyof Account) => {
 		const val = (e.target as HTMLInputElement).value;
-		setAccount(props.personIdx, 'account', property, val);
+		setAccount(props.accountId, 'account', property, val);
 	};
-
-	// Create derived signals that react to any change in props.
-	const currPerson = createMemo(() => accounts[props.personIdx].account);
 
 	return (
 		<Col class='d-flex pt-2 flex-column gap-3'>
 			<Stack direction='horizontal' class='align-items-baseline' gap={2}>
 				<FormGroup as={Col} controlId='name'>
 					<Form.Control
-						value={currPerson().firstName}
+						value={currAccount().firstName}
 						onInput={(evt) => _onEdit(evt, 'firstName')}
 						type='text'
 						placeholder='Name'
@@ -48,7 +44,7 @@ export default function AccountRow(props: AccountRowProps) {
 				</FormGroup>
 				<FormGroup as={Col} controlId='schemaName'>
 					<Form.Control
-						value={currPerson().lastName}
+						value={currAccount().lastName}
 						onInput={(evt) => _onEdit(evt, 'lastName')}
 						type='text'
 						placeholder='Schema Name'
@@ -56,7 +52,7 @@ export default function AccountRow(props: AccountRowProps) {
 				</FormGroup>
 				<FormGroup as={Col} controlId='type'>
 					<Form.Control
-						value={currPerson().title}
+						value={currAccount().title}
 						onInput={(evt) => _onEdit(evt, 'title')}
 						type='text'
 						placeholder='Type'
@@ -65,7 +61,7 @@ export default function AccountRow(props: AccountRowProps) {
 				<div class='vr' />
 				<Button
 					variant='danger'
-					onClick={() => deleteAccountAt(props.personIdx)}
+					onClick={() => deleteAccountAt(props.accountId)}
 				>
 					<i class='bi-trash' />
 				</Button>
@@ -73,27 +69,27 @@ export default function AccountRow(props: AccountRowProps) {
 			<ButtonGroup>
 				<Button
 					variant='primary'
-					onClick={() => addDetailTo(props.personIdx, true)}
+					onClick={() => addDetailTo(props.accountId, true)}
 				>
 					Add Income
 				</Button>
 				<Button
 					variant='primary'
-					onClick={() => addDetailTo(props.personIdx, false)}
+					onClick={() => addDetailTo(props.accountId, false)}
 				>
 					Add Cost
 				</Button>
 			</ButtonGroup>
 			<Stack direction='horizontal' class='align-items-baseline' gap={2}>
 				<BalanceSheet
-					accountIdx={props.personIdx}
+					accountId={props.accountId}
 					isInput={true}
-					details={currPerson().income}
+					details={currAccount().income}
 				/>
 				<BalanceSheet
-					accountIdx={props.personIdx}
+					accountId={props.accountId}
 					isInput={false}
-					details={currPerson().spend}
+					details={currAccount().spend}
 				/>
 			</Stack>
 		</Col>
@@ -101,7 +97,7 @@ export default function AccountRow(props: AccountRowProps) {
 }
 
 interface BalanceSheetProps {
-	accountIdx: number;
+	accountId: string;
 	isInput: boolean;
 	details: AccountDetails;
 }
@@ -132,7 +128,7 @@ function BalanceSheet(props: BalanceSheetProps) {
 						<Button
 							variant='danger'
 							onClick={() =>
-								removeAccountFrom(props.accountIdx, props.isInput, idx())
+								removeAccountFrom(props.accountId, props.isInput, idx())
 							}
 						>
 							<i class='bi-trash' />

@@ -44,6 +44,8 @@ export interface AccountUI {
 	y: number;
 }
 
+export type AccountDict = Record<string, AccountUI>;
+
 export interface EquipmentUI {
 	id: string;
 	name: string;
@@ -53,6 +55,8 @@ export interface EquipmentUI {
 	x: number;
 	y: number;
 }
+
+export type EquipmentDict = Record<string, EquipmentUI>;
 
 export const createFakeDetails = (isInput: boolean): AccountDetail => ({
 	name: faker.string.alphanumeric({ length: 10 }),
