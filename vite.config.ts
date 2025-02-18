@@ -14,7 +14,7 @@ export default defineConfig(({ mode }) => {
 			}
 		},
 		appType: 'spa',
-		base: mode === 'production' ? '/solidjs-store-playground/' : '/',
+		base: mode === 'production' ? '/solidjs-store-playground' : '/',
 		resolve: {
 			alias: {
 				'@': '/src',
