@@ -1,6 +1,8 @@
 ### This is an experiment to observe how reactivity can be achieved with an array of deeply nested objects using Solid's immutable createStore().
 ### I have commented on some of the caveats I ran into.
 
+## See the demo at : https://sid1029.github.io/solidjs-store-playground
+
 ## Usage
 
 ```bash
