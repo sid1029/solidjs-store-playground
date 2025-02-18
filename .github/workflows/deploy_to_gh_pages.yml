@@ -36,6 +36,11 @@ jobs:
         cache: 'npm'
     - run: npm ci
     - run: npm run build --if-present
+    - name: Upload dist as artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: dist-dir
+        path: 'dist' # Dist dir contains built static assets.
 
   # Deploy
   deploy:
@@ -45,12 +50,17 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
+      - name: Download dist artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: dist-dir
+          path: dist
       - name: Setup Pages
         uses: actions/configure-pages@v5
-      - name: Upload artifact
+      - name: Upload pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: 'dist' # Dist dir contains built static assets.
+          path: 'dist'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
