@@ -40,6 +40,16 @@ const App: Component<RouteSectionProps<unknown>> = (
 							<Nav.Link as={A} href='/employees'>
 								<LabeledIcon iconId='people' label='Employees' />
 							</Nav.Link>
+							<Nav.Link href='https://github.com/sid1029/solidjs-store-playground'>
+								<LabeledIcon
+									iconId='github'
+									label={
+										<span>
+											Github <i class='bi bi-box-arrow-up-right ps-1' />
+										</span>
+									}
+								/>
+							</Nav.Link>
 						</Nav>
 					</Navbar.Collapse>
 				</Container>

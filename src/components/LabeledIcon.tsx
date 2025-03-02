@@ -1,8 +1,8 @@
-import type { Component } from 'solid-js';
+import type { Component, JSX } from 'solid-js';
 
 interface LabeledIconProps {
 	iconId: string;
-	label: string;
+	label: JSX.Element;
 	iconAfter?: boolean;
 }
 
