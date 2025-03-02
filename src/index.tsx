@@ -17,13 +17,13 @@ const root = document.getElementById('root');
 render(
 	() => (
 		<Router root={App} base='/solidjs-store-playground'>
-			<Route path='/home' component={Home} />
 			<Route path='/accounts' component={AccountRoot} />
 			<Route path='/accounts/:id' component={AccountDetailsView} />
 			<Route path='/equipment' component={EquipmentRoot} />
 			<Route path='/equipment/:id' component={EquipmentDetailsView} />
 			<Route path='/employees' component={EmployeeRoot} />
 			<Route path='/employees/:id' component={EmployeeDetailsView} />
+			<Route path={['/*', '/home']} component={Home} />
 		</Router>
 	),
 	// biome-ignore lint/style/noNonNullAssertion: getting root DOM element to obtain entrypoint.
