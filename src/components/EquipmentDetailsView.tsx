@@ -1,12 +1,12 @@
 import { createMemo } from 'solid-js';
 
-import { Button, Card } from 'solid-bootstrap';
+import { Card, NavLink } from 'solid-bootstrap';
 import ItemNav from '@/components/ItemNav';
 import LabeledIcon from '@/components/LabeledIcon';
 
 import { useCompanyContext } from '@/models/CompanyDirContext';
 import { type Component, Show } from 'solid-js';
-import { useParams, type RouteSectionProps } from '@solidjs/router';
+import { A, useParams, type RouteSectionProps } from '@solidjs/router';
 
 const EquipmentDetailsView: Component<RouteSectionProps<unknown>> = () => {
 	const { equipment } = useCompanyContext();
@@ -17,9 +17,14 @@ const EquipmentDetailsView: Component<RouteSectionProps<unknown>> = () => {
 		<Card border='secondary' class='my-2'>
 			<Card.Header>
 				<Card.Title class='d-flex align-items-baseline mb-0'>
-					<Button class='me-2' variant='warning' href='/equipment'>
+					<NavLink
+						as={A}
+						type='button'
+						class='me-2 p-2 btn btn-outline-success'
+						href='/equipment'
+					>
 						<LabeledIcon iconId='arrow-left-circle' label='Back' />
-					</Button>
+					</NavLink>
 					<Show when={currEquip()}>
 						<span>
 							{currEquip().emoji} - {currEquip().name}
