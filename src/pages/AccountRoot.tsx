@@ -14,7 +14,7 @@ import { Entries } from '@solid-primitives/keyed';
 import AccountRow from '@/components/AccountRow';
 import { useCompanyContext } from '@/models/CompanyDirContext';
 import type { Component } from 'solid-js';
-import type { RouteSectionProps } from '@solidjs/router';
+import { A, type RouteSectionProps } from '@solidjs/router';
 import LabeledIcon from '@/components/LabeledIcon';
 
 const AccountRoot: Component<RouteSectionProps<unknown>> = () => {
@@ -60,7 +60,7 @@ const AccountRoot: Component<RouteSectionProps<unknown>> = () => {
 								{uiPerson().account.lastName}&nbsp;
 								{uiPerson().account.title}
 								<Badge class='float-end font-monospace' bg='primary'>
-									<Nav.Link href={`/accounts/${accountId}`}>
+									<Nav.Link as={A} href={`/accounts/${accountId}`}>
 										<LabeledIcon
 											label={accountId}
 											iconId='info-circle'

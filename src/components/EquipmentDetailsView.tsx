@@ -1,13 +1,12 @@
 import { createMemo } from 'solid-js';
 
 import { Button, Card } from 'solid-bootstrap';
+import ItemNav from '@/components/ItemNav';
+import LabeledIcon from '@/components/LabeledIcon';
 
 import { useCompanyContext } from '@/models/CompanyDirContext';
-import type { Component } from 'solid-js';
+import { type Component, Show } from 'solid-js';
 import { useParams, type RouteSectionProps } from '@solidjs/router';
-import ItemNav from './ItemNav';
-import { Show } from 'solid-js';
-import LabeledIcon from './LabeledIcon';
 
 const EquipmentDetailsView: Component<RouteSectionProps<unknown>> = () => {
 	const { equipment } = useCompanyContext();

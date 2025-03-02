@@ -16,7 +16,7 @@ const root = document.getElementById('root');
 
 render(
 	() => (
-		<Router root={App}>
+		<Router root={App} base='/solidjs-store-playground'>
 			<Route path='/home' component={Home} />
 			<Route path='/accounts' component={AccountRoot} />
 			<Route path='/accounts/:id' component={AccountDetailsView} />

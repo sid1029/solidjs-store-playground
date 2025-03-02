@@ -1,6 +1,7 @@
 import { Nav } from 'solid-bootstrap';
 import { type Component, createMemo } from 'solid-js';
 import LabeledIcon from '@/components/LabeledIcon';
+import { A } from '@solidjs/router';
 
 interface ItemNavProps {
 	itemType: string;
@@ -40,6 +41,7 @@ const ItemNav: Component<ItemNavProps> = (props: ItemNavProps) => {
 		<Nav class={props.class ?? ''}>
 			<Nav.Item>
 				<Nav.Link
+					as={A}
 					eventKey='previous'
 					href={`/${props.itemType}/${prevNext()[0]}`}
 					disabled={prevNext()[0] === undefined}

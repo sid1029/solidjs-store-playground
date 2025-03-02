@@ -14,7 +14,7 @@ import { Entries } from '@solid-primitives/keyed';
 import EquipmentRow from '@/components/EquipmentRow';
 import { useCompanyContext } from '@/models/CompanyDirContext';
 import type { Component } from 'solid-js';
-import type { RouteSectionProps } from '@solidjs/router';
+import { A, type RouteSectionProps } from '@solidjs/router';
 import LabeledIcon from '@/components/LabeledIcon';
 
 const EquipmentRoot: Component<RouteSectionProps<unknown>> = () => {
@@ -57,7 +57,7 @@ const EquipmentRoot: Component<RouteSectionProps<unknown>> = () => {
 							<ListGroup.Item itemId={uiEquip().id}>
 								{uiEquip().emoji} - {uiEquip().manufacturer} - {uiEquip().name}
 								<Badge class='float-end font-monospace' bg='primary'>
-									<Nav.Link href={`/equipment/${equipmentId}`}>
+									<Nav.Link as={A} href={`/equipment/${equipmentId}`}>
 										<LabeledIcon
 											label={equipmentId}
 											iconId='info-circle'

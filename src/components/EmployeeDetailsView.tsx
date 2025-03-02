@@ -1,13 +1,12 @@
 import { createMemo } from 'solid-js';
 
 import { Button, Card } from 'solid-bootstrap';
+import ItemNav from '@/components/ItemNav';
+import LabeledIcon from '@/components/LabeledIcon';
 
-import type { Component } from 'solid-js';
+import { type Component, Show } from 'solid-js';
 import { useParams, type RouteSectionProps } from '@solidjs/router';
 import { useEmployeeContext } from '@/models/EmployeeContext';
-import { Show } from 'solid-js';
-import ItemNav from './ItemNav';
-import LabeledIcon from './LabeledIcon';
 
 const EmployeeDetailsView: Component<RouteSectionProps<unknown>> = () => {
 	const { employees } = useEmployeeContext();

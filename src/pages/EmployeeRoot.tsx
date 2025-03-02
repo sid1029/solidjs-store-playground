@@ -14,7 +14,7 @@ import { Entries } from '@solid-primitives/keyed';
 import { useEmployeeContext } from '@/models/EmployeeContext';
 import EmployeeRow from '@/components/EmployeeRow';
 import type { Component } from 'solid-js';
-import type { RouteSectionProps } from '@solidjs/router';
+import { A, type RouteSectionProps } from '@solidjs/router';
 import LabeledIcon from '@/components/LabeledIcon';
 
 const EmployeeRoot: Component<RouteSectionProps<unknown>> = () => {
@@ -60,7 +60,7 @@ const EmployeeRoot: Component<RouteSectionProps<unknown>> = () => {
 									{empUi().employee.lastName} - {empUi().employee.title}
 								</span>
 								<Badge class='float-end font-monospace' bg='primary'>
-									<Nav.Link href={`/employees/${empId}`}>
+									<Nav.Link as={A} href={`/employees/${empId}`}>
 										<LabeledIcon label={empId} iconId='info-circle' iconAfter />
 									</Nav.Link>
 								</Badge>
