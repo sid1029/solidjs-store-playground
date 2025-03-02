@@ -1,6 +1,6 @@
 import { createMemo } from 'solid-js';
 
-import { Badge, Button, Col, Form, FormGroup, Stack } from 'solid-bootstrap';
+import { Button, Col, Form, FormGroup, Stack } from 'solid-bootstrap';
 
 import type { EquipmentUI } from '@/models/Company';
 import { useCompanyContext } from '@/models/CompanyDirContext';
@@ -31,9 +31,6 @@ export default function EquipmentRow(props: EquipmentRowProps) {
 
 	return (
 		<Col class='d-flex pt-2 flex-column gap-3'>
-			<Badge class='font-monospace' bg='secondary'>
-				{currEquip().id}
-			</Badge>
 			<span class='text-nowrap text-truncate'>{currEquip().contract}</span>
 			<Stack direction='horizontal' class='align-items-baseline' gap={2}>
 				<FormGroup as={Col} controlId='name'>

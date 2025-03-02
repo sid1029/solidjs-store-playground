@@ -16,7 +16,7 @@ export class EmployeeDirectoryContextModel {
 			Object.fromEntries(
 				Array.from({ length: INIT_COUNT }, () => {
 					const fakeEmp = createFakeEmployee();
-					return [fakeEmp.employee.id, createFakeEmployee()];
+					return [fakeEmp.employee.id, fakeEmp];
 				}),
 			),
 		);
@@ -32,7 +32,7 @@ export class EmployeeDirectoryContextModel {
 
 	public addFakeEmployee: VoidFunction = () => {
 		const fakeEmp = createFakeEmployee();
-		this.setEmployees(fakeEmp.employee.id, createFakeEmployee);
+		this.setEmployees(fakeEmp.employee.id, fakeEmp);
 	};
 
 	public deleteEmployee = (id: string) => {
