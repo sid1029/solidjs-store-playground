@@ -1,13 +1,4 @@
-import {
-	Alert,
-	Badge,
-	Button,
-	Card,
-	Container,
-	ListGroup,
-	Nav,
-	Row,
-} from 'solid-bootstrap';
+import { Alert, Badge, Button, Card, ListGroup, Nav } from 'solid-bootstrap';
 
 import { Entries } from '@solid-primitives/keyed';
 
@@ -22,59 +13,51 @@ const AccountRoot: Component<RouteSectionProps<unknown>> = () => {
 		useCompanyContext();
 
 	return (
-		<Container class='px-0'>
-			<Row class='my-3 sticky-top'>
-				<Card border='primary' class='my-2'>
-					<Card.Header>Accounts</Card.Header>
-					<Card.Body>
-						<Card.Title>Accounts : {accountCount()}</Card.Title>
-						<Card.Text>Total revenue : ${totalRevenue()}</Card.Text>
-					</Card.Body>
-				</Card>
-			</Row>
-			<Row class='my-2'>
-				<Button
-					class='mw-100'
-					variant='outline-warning'
-					onClick={addFakeAccount}
+		<>
+			<Card border='primary' class='my-2 sticky-top'>
+				<Card.Header>
+					<LabeledIcon iconId='briefcase' label='Accounts' />
+				</Card.Header>
+				<Card.Body>
+					<Card.Title>Accounts : {accountCount()}</Card.Title>
+					<Card.Text>Total revenue : ${totalRevenue()}</Card.Text>
+				</Card.Body>
+			</Card>
+			<Button
+				class='my-2 mw-100'
+				variant='outline-warning'
+				onClick={addFakeAccount}
+			>
+				Add Account
+				<i class='ps-2 bi-plus-circle-fill' />
+			</Button>
+			<ListGroup class='my-2' numbered={true}>
+				<Entries
+					of={accounts}
+					fallback={
+						<Alert variant='warning' class='text-center'>
+							<i class='bi-exclamation-triangle-fill pe-2' />
+							Add Accounts !
+						</Alert>
+					}
 				>
-					Add Account
-					<i class='ps-2 bi-plus-circle-fill' />
-				</Button>
-			</Row>
-			<Row class='my-3'>
-				<ListGroup numbered={true}>
-					<Entries
-						of={accounts}
-						fallback={
-							<Alert variant='warning' class='text-center'>
-								<i class='bi-exclamation-triangle-fill pe-2' />
-								Add Accounts !
-							</Alert>
-						}
-					>
-						{(accountId, uiPerson) => (
-							<ListGroup.Item itemId={uiPerson().account.id}>
-								{uiPerson().account.emoji} - {uiPerson().account.firstName}
-								&nbsp;
-								{uiPerson().account.lastName}&nbsp;
-								{uiPerson().account.title}
-								<Badge class='float-end font-monospace' bg='primary'>
-									<Nav.Link as={A} href={`/accounts/${accountId}`}>
-										<LabeledIcon
-											label={accountId}
-											iconId='info-circle'
-											iconAfter
-										/>
-									</Nav.Link>
-								</Badge>
-								<AccountRow accountId={accountId} />
-							</ListGroup.Item>
-						)}
-					</Entries>
-				</ListGroup>
-			</Row>
-		</Container>
+					{(accountId, uiPerson) => (
+						<ListGroup.Item itemId={uiPerson().account.id}>
+							{uiPerson().account.emoji} - {uiPerson().account.firstName}
+							&nbsp;
+							{uiPerson().account.lastName}&nbsp;
+							{uiPerson().account.title}
+							<Badge class='float-end font-monospace' bg='success'>
+								<Nav.Link as={A} href={`/accounts/${accountId}`}>
+									<LabeledIcon label={accountId} iconId='info-circle' />
+								</Nav.Link>
+							</Badge>
+							<AccountRow accountId={accountId} />
+						</ListGroup.Item>
+					)}
+				</Entries>
+			</ListGroup>
+		</>
 	);
 };
 

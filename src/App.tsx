@@ -32,13 +32,13 @@ const App: Component<RouteSectionProps<unknown>> = (
 					<Navbar.Collapse id='responsive-navbar-nav'>
 						<Nav class='ms-auto'>
 							<Nav.Link as={A} href='/accounts'>
-								Accounts
+								<LabeledIcon iconId='briefcase' label='Accounts' />
 							</Nav.Link>
 							<Nav.Link as={A} href='/equipment'>
-								Equipment
+								<LabeledIcon iconId='tools' label='Equipment' />
 							</Nav.Link>
 							<Nav.Link as={A} href='/employees'>
-								Employees
+								<LabeledIcon iconId='people' label='Employees' />
 							</Nav.Link>
 						</Nav>
 					</Navbar.Collapse>
