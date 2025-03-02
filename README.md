@@ -1,3 +1,5 @@
+[![Build](https://github.com/sid1029/solidjs-store-playground/actions/workflows/deploy_to_gh_pages.yml/badge.svg)](https://github.com/sid1029/solidjs-store-playground/actions/workflows/deploy_to_gh_pages.yml)
+
 ### This is an experiment to observe how reactivity can be achieved with an array of deeply nested objects using Solid's immutable createStore().
 ### I have commented on some of the caveats I ran into.
 
