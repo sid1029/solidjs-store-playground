@@ -51,6 +51,7 @@ const ItemNav: Component<ItemNavProps> = (props: ItemNavProps) => {
 			</Nav.Item>
 			<Nav.Item>
 				<Nav.Link
+					as={A}
 					eventKey='next'
 					href={`/${props.itemType}/${prevNext()[1]}`}
 					disabled={prevNext()[1] === undefined}
