@@ -68,13 +68,13 @@ export default function AccountRow(props: AccountRowProps) {
 			</Stack>
 			<ButtonGroup>
 				<Button
-					variant='primary'
+					variant='outline-warning'
 					onClick={() => addDetailTo(props.accountId, true)}
 				>
 					Add Income
 				</Button>
 				<Button
-					variant='primary'
+					variant='outline-warning'
 					onClick={() => addDetailTo(props.accountId, false)}
 				>
 					Add Cost
@@ -106,7 +106,7 @@ function BalanceSheet(props: BalanceSheetProps) {
 	const { removeAccountFrom } = useCompanyContext();
 
 	return (
-		<ListGroup style={{ 'max-width': '49%', flex: '0.5 1' }}>
+		<ListGroup style={{ flex: '0.5 1' }}>
 			<Key
 				each={props.details}
 				by='name'
