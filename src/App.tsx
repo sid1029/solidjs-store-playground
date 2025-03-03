@@ -40,7 +40,10 @@ const App: Component<RouteSectionProps<unknown>> = (
 							<Nav.Link as={A} href='/employees'>
 								<LabeledIcon iconId='people' label='Employees' />
 							</Nav.Link>
-							<Nav.Link href='https://github.com/sid1029/solidjs-store-playground'>
+							<Nav.Link
+								href='https://github.com/sid1029/solidjs-store-playground'
+								target='_blank'
+							>
 								<LabeledIcon
 									iconId='github'
 									label={
