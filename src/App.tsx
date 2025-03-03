@@ -1,5 +1,4 @@
 import { MultiProvider } from '@solid-primitives/context';
-import './App.scss';
 import LabeledIcon from '@/components/LabeledIcon';
 import {
 	CompanyContextProvider,
@@ -25,7 +24,7 @@ const App: Component<RouteSectionProps<unknown>> = (
 		>
 			<Navbar class='nav-underline' collapseOnSelect expand='lg'>
 				<Container>
-					<Navbar.Brand as={A} href='/home'>
+					<Navbar.Brand as={A} href='/'>
 						<LabeledIcon iconId='buildings' label='Lumon' />
 					</Navbar.Brand>
 					<Navbar.Toggle aria-controls='responsive-navbar-nav' />

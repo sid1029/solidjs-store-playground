@@ -14,7 +14,14 @@ export default defineConfig(({ mode }) => ({
 			},
 		},
 	},
+	optimizeDeps: {
+	  include: ['**/*.scss'], // Include all .scss files
+	},
 	css: {
+		modules: {
+		  // Enable CSS Modules for all .scss files
+		  localsConvention: 'camelCaseOnly',
+		},
 		preprocessorOptions: {
 			scss: {
 				additionalData: '@import "@/styles/variables";',
