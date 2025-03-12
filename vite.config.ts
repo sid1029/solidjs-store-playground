@@ -3,7 +3,7 @@ import solid from 'vite-plugin-solid';
 
 export default defineConfig(({ mode }) => ({
 	appType: 'spa',
-	base: mode === 'production' ? '/solidjs-store-playground' : '/',
+	base: '/solidjs-store-playground',
 	build: {
 		target: 'esnext',
 		rollupOptions: {
@@ -15,12 +15,12 @@ export default defineConfig(({ mode }) => ({
 		},
 	},
 	optimizeDeps: {
-	  include: ['**/*.scss'], // Include all .scss files
+		include: ['**/*.scss'], // Include all .scss files
 	},
 	css: {
 		modules: {
-		  // Enable CSS Modules for all .scss files
-		  localsConvention: 'camelCaseOnly',
+			// Enable CSS Modules for all .scss files
+			localsConvention: 'camelCaseOnly',
 		},
 		preprocessorOptions: {
 			scss: {
