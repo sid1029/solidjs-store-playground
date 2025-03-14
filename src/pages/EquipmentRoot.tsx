@@ -7,6 +7,7 @@ import { useCompanyContext } from '@/models/CompanyDirContext';
 import type { Component } from 'solid-js';
 import { A, type RouteSectionProps } from '@solidjs/router';
 import LabeledIcon from '@/components/LabeledIcon';
+import SummaryFooter from '@/components/SummaryFooter';
 
 const EquipmentRoot: Component<RouteSectionProps<unknown>> = () => {
 	const { equipment, addFakeEquipment, equipmentCount, totalSpend } =
@@ -20,6 +21,7 @@ const EquipmentRoot: Component<RouteSectionProps<unknown>> = () => {
 					<Card.Title>Equip count : {equipmentCount()}</Card.Title>
 					<Card.Text>Equip total spend : ${totalSpend()}</Card.Text>
 				</Card.Body>
+				<SummaryFooter />
 			</Card>
 			<Button
 				class='my-2 mw-100'

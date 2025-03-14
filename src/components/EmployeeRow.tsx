@@ -30,7 +30,12 @@ export default function EmployeeRow(props: EmployeeRowProps) {
 
 	return (
 		<Col class='d-flex pt-2 flex-column gap-3'>
-			<Stack direction='horizontal' class='align-items-baseline' gap={2}>
+			<Stack
+				as={Form}
+				direction='horizontal'
+				class='align-items-baseline'
+				gap={2}
+			>
 				<FormGroup as={Col} controlId='firstName'>
 					<Form.Control
 						value={currEmp().firstName}
@@ -56,7 +61,12 @@ export default function EmployeeRow(props: EmployeeRowProps) {
 					/>
 				</FormGroup>
 				<div class='vr' />
-				<Button variant='danger' onClick={() => deleteEmployee(props.empId)}>
+				<Button
+					variant='danger'
+					id='deleteEmp'
+					type='button'
+					onClick={() => deleteEmployee(props.empId)}
+				>
 					<i class='bi-trash' />
 				</Button>
 			</Stack>

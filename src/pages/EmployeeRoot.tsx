@@ -7,6 +7,7 @@ import EmployeeRow from '@/components/EmployeeRow';
 import type { Component } from 'solid-js';
 import { A, type RouteSectionProps } from '@solidjs/router';
 import LabeledIcon from '@/components/LabeledIcon';
+import SummaryFooter from '@/components/SummaryFooter';
 
 const EmployeeRoot: Component<RouteSectionProps<unknown>> = () => {
 	const { employees, employeeCount, addFakeEmployee, totalSalary } =
@@ -22,6 +23,7 @@ const EmployeeRoot: Component<RouteSectionProps<unknown>> = () => {
 					<Card.Title>Employees : {employeeCount()}</Card.Title>
 					<Card.Text>Total Salary : ${totalSalary()}</Card.Text>
 				</Card.Body>
+				<SummaryFooter />
 			</Card>
 			<Button
 				class='my-2 mw-100'

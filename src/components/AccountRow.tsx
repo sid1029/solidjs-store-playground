@@ -33,7 +33,12 @@ export default function AccountRow(props: AccountRowProps) {
 
 	return (
 		<Col class='d-flex pt-2 flex-column gap-3'>
-			<Stack direction='horizontal' class='align-items-baseline' gap={2}>
+			<Stack
+				as={Form}
+				direction='horizontal'
+				class='align-items-baseline'
+				gap={2}
+			>
 				<FormGroup as={Col} controlId='name'>
 					<Form.Control
 						value={currAccount().firstName}

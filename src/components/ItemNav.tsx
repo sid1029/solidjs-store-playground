@@ -11,11 +11,14 @@ interface ItemNavProps {
 }
 
 const ItemNav: Component<ItemNavProps> = (props: ItemNavProps) => {
+	// Create a memo signal that calculates the previous and next keys.
+	// It's value gets computed only once even though it is accessed
+	// several times in the template below.
 	const prevNext = createMemo(() =>
-		getPreviousAndNextKeys(props.data, props.id),
+		_getPreviousAndNextKeys(props.data, props.id),
 	);
 
-	function getPreviousAndNextKeys<T>(
+	function _getPreviousAndNextKeys<T>(
 		data: Record<string, T>,
 		key: string,
 	): [string | undefined, string | undefined] {

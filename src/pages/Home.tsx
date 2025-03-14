@@ -1,5 +1,5 @@
 import { Card, Col, Nav } from 'solid-bootstrap';
-import type { Component } from 'solid-js';
+import { onCleanup, onMount, type Component } from 'solid-js';
 import { A, type RouteSectionProps } from '@solidjs/router';
 import { useCompanyContext } from '@/models/CompanyDirContext';
 import { useEmployeeContext } from '@/models/EmployeeContext';
@@ -9,6 +9,14 @@ const Home: Component<RouteSectionProps<unknown>> = () => {
 	const { equipmentCount, totalSpend, accountCount, totalRevenue } =
 		useCompanyContext();
 	const { employeeCount, totalSalary } = useEmployeeContext();
+
+	onMount(() => {
+		console.log('Home mounted');
+	});
+
+	onCleanup(() => {
+		console.log('Home unmounted');
+	});
 
 	return (
 		<Col>

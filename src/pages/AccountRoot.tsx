@@ -7,6 +7,7 @@ import { useCompanyContext } from '@/models/CompanyDirContext';
 import type { Component } from 'solid-js';
 import { A, type RouteSectionProps } from '@solidjs/router';
 import LabeledIcon from '@/components/LabeledIcon';
+import SummaryFooter from '@/components/SummaryFooter';
 
 const AccountRoot: Component<RouteSectionProps<unknown>> = () => {
 	const { accounts, addFakeAccount, accountCount, totalRevenue } =
@@ -22,6 +23,7 @@ const AccountRoot: Component<RouteSectionProps<unknown>> = () => {
 					<Card.Title>Accounts : {accountCount()}</Card.Title>
 					<Card.Text>Total revenue : ${totalRevenue()}</Card.Text>
 				</Card.Body>
+				<SummaryFooter />
 			</Card>
 			<Button
 				class='my-2 mw-100'
